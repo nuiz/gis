@@ -1,0 +1,14 @@
+{
+    "require": {
+        "slim/slim": "*",
+        "slim/twig-view": "*",
+        "twig/twig": "*",
+        "catfan/Medoo": "*",
+        "aura/session": "*"
+    },
+    "autoload": {
+      "psr-0": {
+        "Main": "src/"
+      }
+    }
+}

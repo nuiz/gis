@@ -1,0 +1,75 @@
+{% extends "layout.twig" %}
+
+{% block body %}
+<div class="container">
+  <h3>Add Person</h3>
+  <form method="post">
+    <div class="form-group">
+      <label>First Name</label>
+      <input type="text" class="form-control" name="first_name" value="{{ form.first_name }}">
+    </div>
+    <div class="form-group">
+      <label>Last Name</label>
+      <input type="text" class="form-control" name="last_name" value="{{ form.last_name }}">
+    </div>
+    <div class="form-group">
+      <label>Birth Date</label>
+      <input type="text" class="form-control datepicker" name="birth_date" value="{{ form.birth_date }}" readonly="">
+    </div>
+    <div class="form-group">
+      <label>Address</label>
+      <textarea class="form-control" name="address">{{ form.address }}</textarea>
+    </div>
+    <div class="form-group">
+      <label>Latitude</label>
+      <input type="text" class="form-control" name="location_lat" value="{{ form.location_lat }}">
+    </div>
+    <div class="form-group">
+      <label>Longitude</label>
+      <input type="text" class="form-control" name="location_lng" value="{{ form.location_lng }}">
+    </div>
+    <div class="form-group">
+      <label>Die Date</label>
+      <input type="text" class="form-control datepicker" name="die_date" value="{{ form.die_date }}" readonly="">
+    </div>
+    <div class="form-group">
+      <label>Register Date</label>
+      <input type="text" class="form-control datepicker" name="reg_date" value="{{ form.reg_date }}" readonly="">
+    </div>
+    <div class="form-group">
+      <label><input type="checkbox" name="is_older" value="1" {% if form.is_older %}checked{% endif %}> IS Older</label>
+    </div>
+    <div class="form-group">
+      <label>Cripple</label>
+      <select class="form-control" name="cripple_id">
+        <option value="0">--None--</option>
+        {% for cripple in cripples %}
+        <option value="{{ cripple.id }}" {% if form.cripple_id == cripple.id %}selected{% endif %}>{{ cripple.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Disavantaged</label>
+      <select class="form-control" name="disa_id">
+        <option value="0">--None--</option>
+        {% for disavantaged in disavantageds %}
+        <option value="{{ disavantaged.id }}" {% if form.disa_id == disavantaged.id %}selected{% endif %}>{{ disavantaged.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Scholar</label>
+      <select class="form-control" name="scho_id">
+        <option value="0">--None--</option>
+        {% for scholar in scholars %}
+        <option value="{{ scholar.id }}" {% if form.scho_id == scholar.id %}selected{% endif %}>{{ scholar.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div>
+      <button type="submit" class="btn btn-primary">Save</button>
+      <a class="btn btn-warning" href="{{ base_url() }}/person">Back to list</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

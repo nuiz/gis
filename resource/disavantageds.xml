@@ -1,0 +1,27 @@
+<root>
+  <disavantageds>
+    <id>1</id>
+    <name>คนยากจน</name>
+    <allowance>500</allowance>
+  </disavantageds>
+  <disavantageds>
+    <id>2</id>
+    <name>คนเร่ร่อนไร้ที่อยู่อาศัย</name>
+    <allowance>500</allowance>
+  </disavantageds>
+  <disavantageds>
+    <id>3</id>
+    <name>คนไม่มีสถานะทางทะเบียน</name>
+    <allowance>500</allowance>
+  </disavantageds>
+  <disavantageds>
+    <id>4</id>
+    <name>ผู้พ้นโทษ</name>
+    <allowance>500</allowance>
+  </disavantageds>
+  <disavantageds>
+    <id>5</id>
+    <name>ผู้ติดเชื้อHIV</name>
+    <allowance>500</allowance>
+  </disavantageds>
+</root>

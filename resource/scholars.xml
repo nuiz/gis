@@ -1,0 +1,33 @@
+<?xml version='1.0' standalone='yes'?>
+<root>
+  <scholars>
+    <id>1</id>
+    <name>สาขาปราชญ์ชาวบ้าน</name>
+    <allowance>0</allowance>
+  </scholars>
+  <scholars>
+    <id>2</id>
+    <name>สาขาคติ ความเชื่อ หลักปฏิบัติ</name>
+    <allowance>0</allowance>
+  </scholars>
+  <scholars>
+    <id>3</id>
+    <name>สาขาประเพณี พิธีกรรม</name>
+    <allowance>0</allowance>
+  </scholars>
+  <scholars>
+    <id>4</id>
+    <name>สาขาการดำรงชีพและโภชนาการพื้นบ้าน</name>
+    <allowance>0</allowance>
+  </scholars>
+  <scholars>
+    <id>4</id>
+    <name>สาขาเทคโนโลยีพื้นบ้าน</name>
+    <allowance>0</allowance>
+  </scholars>
+  <scholars>
+    <id>4</id>
+    <name>สาขาบริหารจัดการความหลากหลายทางชีวภาพ</name>
+    <allowance>0</allowance>
+  </scholars>
+</root>

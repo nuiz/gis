@@ -1,0 +1,11 @@
+#body {
+  padding-bottom: 20px;
+}
+
+.remove-btn {
+  color: red;
+}
+
+.input-group.date .glyphicon.glyphicon-remove {
+  color: rgb(237, 71, 71);
+}

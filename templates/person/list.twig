@@ -1,0 +1,41 @@
+{% extends "layout.twig" %}
+
+{% block body %}
+<div class="container-fluid">
+  <h3>Person</h3>
+  <a href="{{ base_url() }}/person/add" class="btn btn-info">Add</a>
+  <table class="table table-bordered">
+    <tr>
+      <th class="text-center">id</th>
+      <th class="text-center">Name</th>
+      <th class="text-center">Age</th>
+      <th class="text-center">Die Date</th>
+      <th class="text-center">Reg Date</th>
+      <th class="text-center">Is Older</th>
+      <th class="text-center">Cripper</th>
+      <th class="text-center">Disadvantaged</th>
+      <th class="text-center">Scholar</th>
+      <th class="text-center">Total Allowance</th>
+      <th></th>
+    </tr>
+    {% for item in items %}
+    <tr>
+      <td class="text-center">{{ item.id }}</td>
+      <td>{{ item.first_name }} {{ item.last_name }}</td>
+      <td>{{ item.age }}</td>
+      <td class="text-center">{{ item.die_date==null? '-': item.die_date|date("d/m/Y") }}</td>
+      <td class="text-center">{{ item.reg_date==null? '-': item.reg_date|date("d/m/Y") }}</td>
+      <td class="text-center"><span class="badge">{{ item.is_older ? 'Yes': 'No' }}</span></td>
+      <td>{{ item.cripple.name }}</td>
+      <td>{{ item.disavantaged.name }}</td>
+      <td>{{ item.scholar.name }}</td>
+      <td class="text-center">{{ item.total_allowance|number_format }}</td>
+      <td>
+        <a href="{{ base_url() }}/person/edit/{{ item.id }}"><i class="glyphicon glyphicon-pencil"></i></a>
+        <a class="remove-btn" href="{{ base_url() }}/person/remove/{{ item.id }}"><i class="glyphicon glyphicon-remove"></i></a>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

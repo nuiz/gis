@@ -1,0 +1,33 @@
+<?xml version='1.0' standalone='yes'?>
+<root>
+  <cripples>
+    <id>1</id>
+    <name>ความพิการทางการมองเห็น</name>
+    <allowance>800</allowance>
+  </cripples>
+  <cripples>
+    <id>2</id>
+    <name>ความพิการทางการได้ยินหรือสื่อความหมาย</name>
+    <allowance>800</allowance>
+  </cripples>
+  <cripples>
+    <id>3</id>
+    <name>ความพิการทางจิตใจหรือออสทิสติก</name>
+    <allowance>800</allowance>
+  </cripples>
+  <cripples>
+    <id>4</id>
+    <name>ความพิการทางการเคลื่อนไหวหรือร่างกาย</name>
+    <allowance>800</allowance>
+  </cripples>
+  <cripples>
+    <id>5</id>
+    <name>ความพิการทางสติปัญญา</name>
+    <allowance>800</allowance>
+  </cripples>
+  <cripples>
+    <id>6</id>
+    <name>ความพิการทางการเรียนรู้</name>
+    <allowance>800</allowance>
+  </cripples>
+</root>
