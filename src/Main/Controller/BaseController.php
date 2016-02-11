@@ -3,9 +3,13 @@ namespace Main\Controller;
 
 abstract class BaseController
 {
-    public function __construct()
-    {
-        global $slim;
-        $this->slim = $slim;
-    }
+  /**
+  * @var Slim\App $slim;
+  */
+  protected $slim;
+  public function __construct()
+  {
+      global $slim;
+      $this->slim = $slim;
+  }
 }

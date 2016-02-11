@@ -6,6 +6,7 @@ use Slim\App;
 use Interop\Container\ContainerInterface;
 use Aura\Session\SessionFactory;
 use Main\Service\XMLService;
+use Main\Middleware\AuthMiddleware;
 
 class Main {
 	private $slim, $route, $configFolder;
@@ -29,6 +30,8 @@ class Main {
 
 		// injection container
 		$this->injectContainer();
+		// add Middleware
+		$this->addMiddleware();
 
 		// load and run route
 		$this->route = new Route($this->slim);
@@ -98,6 +101,6 @@ class Main {
 
 	public function addMiddleware()
 	{
-		// $this->slim->add(new AuthMiddleware());
+		$this->slim->add(new AuthMiddleware($this->slim->getContainer()));
 	}
 }

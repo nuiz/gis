@@ -6,7 +6,7 @@ use Slim\Http\Response;
 use Slim\Http\ResponseInterface;
 use Main\Service\XMLService;
 
-class MainController extends BaseController
+class PersonController extends BaseController
 {
   public function persons(Request $req, Response $res)
   {
