@@ -1,0 +1,25 @@
+{% extends "layout.twig" %}
+
+{% block body %}
+<div class="container-fluid">
+  <h3>Learningcenter</h3>
+  <a href="{{ base_url() }}/learningcenter/add" class="btn btn-info">Add</a>
+  <table class="table table-bordered">
+    <tr>
+      <th class="text-center">id</th>
+      <th class="text-center">Name</th>
+      <th></th>
+    </tr>
+    {% for item in items %}
+    <tr>
+      <td class="text-center">{{ item.id }}</td>
+      <td>{{ item.name }}</td>
+      <td>
+        <a href="{{ base_url() }}/learningcenter/edit/{{ item.id }}"><i class="glyphicon glyphicon-pencil"></i></a>
+        <a class="remove-btn" href="{{ base_url() }}/learningcenter/remove/{{ item.id }}"><i class="glyphicon glyphicon-remove"></i></a>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

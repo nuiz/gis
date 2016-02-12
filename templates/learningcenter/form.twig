@@ -1,0 +1,29 @@
+{% extends "layout.twig" %}
+
+{% block body %}
+<div class="container">
+  <h3>Add Learningcenter</h3>
+  <form method="post">
+    <div class="form-group">
+      <label>Name</label>
+      <input type="text" class="form-control" name="name" value="{{ form.name }}">
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <textarea class="form-control" name="description">{{ form.description }}</textarea>
+    </div>
+    <div class="form-group">
+      <label>Latitude</label>
+      <input type="text" class="form-control" name="location_lat" value="{{ form.location_lat }}">
+    </div>
+    <div class="form-group">
+      <label>Longitude</label>
+      <input type="text" class="form-control" name="location_lng" value="{{ form.location_lng }}">
+    </div>
+    <div>
+      <button type="submit" class="btn btn-primary">Save</button>
+      <a class="btn btn-warning" href="{{ base_url() }}/learningcenter">Back to list</a>
+    </div>
+  </form>
+</div>
+{% endblock %}
