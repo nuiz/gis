@@ -1,0 +1,95 @@
+{% extends "layout.twig" %}
+
+{% block body %}
+<style media="screen">
+.item-detail .row {
+  border-bottom: 1px solid rgb(158, 158, 158);
+}
+.map {
+  border: 3px solid rgb(158, 158, 158);
+  height: 500px;
+  margin-bottom: 20px;
+}
+</style>
+<div class="container">
+  <h3>Person</h3>
+  <div class="item-detail">
+    <div class="row">
+      <div class="col-md-6">Name</div>
+      <div class="col-md-6">{{ item.first_name }} {{ item.last_name }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">Age</div>
+      <div class="col-md-6">{{ item.age }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">Address</div>
+      <div class="col-md-6">{{ item.address }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">Village</div>
+      <div class="col-md-6">{{ item.village }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">District</div>
+      <div class="col-md-6">{{ item.district }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">City</div>
+      <div class="col-md-6">{{ item.city }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">Provice</div>
+      <div class="col-md-6">{{ item.province }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">Zipcode</div>
+      <div class="col-md-6">{{ item.zipcode }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">Older</div>
+      <div class="col-md-6">{{ item.is_older ? 'Yes': 'No' }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">Cripple</div>
+      <div class="col-md-6">{{ item.cripple ? item.cripple.name ~ '('~ item.cripple.allowance ~')': '-' }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">Disavantaged</div>
+      <div class="col-md-6">{{ item.disavantaged ? item.disavantaged.name ~ '('~ item.disavantaged.allowance ~')': '-' }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">Scholar</div>
+      <div class="col-md-6">{{ item.scholar ? item.scholar.name ~ '('~ item.scholar.allowance ~')': '-' }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="text-center">
+          <strong>Map</strong>
+        </div>
+        <div class="map"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLDfQWtqjiEFfVNPa4wGnIEclpx8dcSrU"></script>
+<script type="text/javascript">
+(function(){
+  "use strict";
+  // {lat: 15.231497, lng: 100.213483}
+
+  var latLng = {lat: {{ item.location_lat }}, lng: {{ item.location_lng }}};
+  var mapEl = document.getElementsByClassName("map")[0];
+  var map = new google.maps.Map(mapEl, {
+    center: latLng,
+    zoom: 10
+  });
+
+  var marker = new google.maps.Marker({
+    position: latLng,
+    map: map,
+    title: '{{ item.first_name }} {{ item.last_name }}'
+  });
+})();
+</script>
+{% endblock %}

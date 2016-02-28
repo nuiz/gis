@@ -21,6 +21,26 @@
       <textarea class="form-control" name="address">{{ form.address }}</textarea>
     </div>
     <div class="form-group">
+      <label>Village</label>
+      <input type="text" class="form-control" name="village" value="{{ form.village }}">
+    </div>
+    <div class="form-group">
+      <label>District</label>
+      <input type="text" class="form-control" name="district" value="{{ form.district }}">
+    </div>
+    <div class="form-group">
+      <label>City</label>
+      <input type="text" class="form-control" name="city" value="{{ form.city }}">
+    </div>
+    <div class="form-group">
+      <label>Province</label>
+      <input type="text" class="form-control" name="province" value="{{ form.province }}">
+    </div>
+    <div class="form-group">
+      <label>Zip code</label>
+      <input type="text" class="form-control" name="zipcode" value="{{ form.zipcode }}">
+    </div>
+    <div class="form-group">
       <label>Latitude</label>
       <input type="text" class="form-control" name="location_lat" value="{{ form.location_lat }}">
     </div>
@@ -42,7 +62,7 @@
     <div class="form-group">
       <label>Cripple</label>
       <select class="form-control" name="cripple_id">
-        <option value="0">--None--</option>
+        <option value="">--None--</option>
         {% for cripple in cripples %}
         <option value="{{ cripple.id }}" {% if form.cripple_id == cripple.id %}selected{% endif %}>{{ cripple.name }}</option>
         {% endfor %}
@@ -51,7 +71,7 @@
     <div class="form-group">
       <label>Disavantaged</label>
       <select class="form-control" name="disa_id">
-        <option value="0">--None--</option>
+        <option value="">--None--</option>
         {% for disavantaged in disavantageds %}
         <option value="{{ disavantaged.id }}" {% if form.disa_id == disavantaged.id %}selected{% endif %}>{{ disavantaged.name }}</option>
         {% endfor %}
@@ -60,7 +80,7 @@
     <div class="form-group">
       <label>Scholar</label>
       <select class="form-control" name="scho_id">
-        <option value="0">--None--</option>
+        <option value="">--None--</option>
         {% for scholar in scholars %}
         <option value="{{ scholar.id }}" {% if form.scho_id == scholar.id %}selected{% endif %}>{{ scholar.name }}</option>
         {% endfor %}

@@ -27,12 +27,32 @@ class PersonController extends BaseController
     $disavantageds = $disavantagedsService->gets();
     $scholars = $scholarsService->gets();
 
-    $items = $db->select("person", "*");
+    $queryParams = $req->getQueryParams();
+    $where = [];
+    if(!empty($queryParams["is_older"])) {
+      $where["is_older"] = $queryParams["is_older"];
+    }
+    if(!empty($queryParams["cripple_id"])) {
+      $where["cripple_id"] = $queryParams["cripple_id"];
+    }
+    if(!empty($queryParams["disa_id"])) {
+      $where["disa_id"] = $queryParams["disa_id"];
+    }
+    if(!empty($queryParams["scho_id"])) {
+      $where["scho_id"] = $queryParams["scho_id"];
+    }
+    if(!empty($queryParams["keyword"])) {
+      $where["first_name[~]"] = "%".$queryParams["keyword"]."%";
+    }
+    if(count($where) > 0) $where = ["AND"=> $where];
+
+    $items = $db->select("person", "*", $where);
     $this->buildItems($items);
 
     // var_dump($items[0]); exit();
 
     return $container->view->render($res, "person/list.twig", [
+      "form"=> $queryParams,
       "items"=> $items,
       "olders"=> $olders,
       "cripples"=> $cripples,
@@ -40,6 +60,31 @@ class PersonController extends BaseController
       "scholars"=> $scholars
     ]);
 	}
+
+  public function person(Request $req, Response $res, $attr = [])
+  {
+    $container = $this->slim->getContainer();
+    $db = $container->medoo;
+
+    $cripplesService = XMLService::getInstance("cripples");
+    $disavantagedsService = XMLService::getInstance("disavantageds");
+    $scholarsService = XMLService::getInstance("scholars");
+
+    $item = $db->get("person", "*", ["id"=> $attr["id"]]);
+    if(!$item) {
+      return $res->withHeader("Location", $req->getUri()->getBasePath()."/person");
+    }
+    $this->buildItem($item);
+
+    // var_dump($item); exit();
+
+    return $container->view->render($res, "person/item.twig", [
+      "item"=> $item,
+      "cripples"=> $cripplesService->gets(),
+      "disavantageds"=> $disavantagedsService->gets(),
+      "scholars"=> $scholarsService->gets()
+    ]);
+  }
 
   public function personGetAdd(Request $req, Response $res)
   {

@@ -25,6 +25,7 @@ class Route
 		$this->slim->any('/logout', IndexController::class. ':anyLogout');
 
 		$this->slim->get('/person', PersonController::class. ':persons');
+		$this->slim->get('/person/{id:[0-9]+}', PersonController::class. ':person');
 		$this->slim->get('/person/add', PersonController::class. ':personGetAdd');
 		$this->slim->post('/person/add', PersonController::class. ':personPostAdd');
 		$this->slim->get('/person/edit/{id:[0-9]+}', PersonController::class. ':personGetEdit');

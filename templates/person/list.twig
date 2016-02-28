@@ -4,6 +4,50 @@
 <div class="container-fluid">
   <h3>Person</h3>
   <a href="{{ base_url() }}/person/add" class="btn btn-info">Add</a>
+  <hr>
+  <form>
+    <div class="row">
+      <div class="form-group col-md-3 text-center">
+        <label>Is Older</label><br>
+        <input type="checkbox" name="is_older" value="1" {% if form.is_older %}checked{% endif %}>
+      </div>
+      <div class="form-group col-md-3">
+        <label>Cripple</label>
+        <select class="form-control" name="cripple_id">
+          <option value="">--None--</option>
+          {% for cripple in cripples %}
+          <option value="{{ cripple.id }}" {% if form.cripple_id == cripple.id %}selected{% endif %}>{{ cripple.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group col-md-3">
+        <label>Disavantaged</label>
+        <select class="form-control" name="disa_id">
+          <option value="">--None--</option>
+          {% for disavantaged in disavantageds %}
+          <option value="{{ disavantaged.id }}" {% if form.disa_id == disavantaged.id %}selected{% endif %}>{{ disavantaged.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group col-md-3">
+        <label>Scholar</label>
+        <select class="form-control" name="scho_id">
+          <option value="">--None--</option>
+          {% for scholar in scholars %}
+          <option value="{{ scholar.id }}" {% if form.scho_id == scholar.id %}selected{% endif %}>{{ scholar.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="text-center">Keyword</label>
+      <input class="form-control" type="text" name="keyword" value="{{ form.keyword }}">
+    </div>
+    <div class="form-group">
+      <button class="form-control btn btn-info" type="submit">Filter</button>
+    </div>
+  </form>
+  <hr>
   <table class="table table-bordered">
     <tr>
       <th class="text-center">id</th>
@@ -21,7 +65,7 @@
     {% for item in items %}
     <tr>
       <td class="text-center">{{ item.id }}</td>
-      <td>{{ item.first_name }} {{ item.last_name }}</td>
+      <td><a href="{{ base_url() }}/person/{{ item.id }}">{{ item.first_name }} {{ item.last_name }}</a></td>
       <td>{{ item.age }}</td>
       <td class="text-center">{{ item.die_date==null? '-': item.die_date|date("d/m/Y") }}</td>
       <td class="text-center">{{ item.reg_date==null? '-': item.reg_date|date("d/m/Y") }}</td>
