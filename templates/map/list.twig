@@ -21,18 +21,33 @@
   "use strict";
   // {lat: 15.231497, lng: 100.213483}
 
-  var latLng = {lat: {{ item.location_lat }}, lng: {{ item.location_lng }}};
   var mapEl = document.getElementsByClassName("map")[0];
   var map = new google.maps.Map(mapEl, {
-    center: latLng,
-    zoom: 10
+    zoom: 7,
+    center: {lat: 15.231497, lng: 100.213483}
   });
 
-  var marker = new google.maps.Marker({
-    position: latLng,
-    map: map,
-    title: '{{ item.first_name }} {{ item.last_name }}'
+  var persons = {{ persons|json_encode|raw }};
+  var careergroups = {{ careergroups|json_encode|raw }};
+  var learningcenters = {{ learningcenters|json_encode|raw }};
+
+  persons.forEach(function(person){
+    makeMarker(person.location_lat, person.location_lng);
   });
+  careergroups.forEach(function(person){
+    makeMarker(person.location_lat, person.location_lng);
+  });
+  learningcenters.forEach(function(person){
+    makeMarker(person.location_lat, person.location_lng);
+  });
+
+  function makeMarker(lat, lng) {
+    var marker = new google.maps.Marker({
+      position: {lat: parseFloat(lat), lng: parseFloat(lng)},
+      map: map,
+      title: '{{ item.first_name }} {{ item.last_name }}'
+    });
+  }
 })();
 </script>
 {% endblock %}
