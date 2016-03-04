@@ -13,6 +13,12 @@
 </style>
 <div class="container">
   <h3>Map</h3>
+  <div class="text-center">
+    <img src="http://maps.google.com/mapfiles/ms/icons/red-dot.png"> Person,
+    <img src="http://maps.google.com/mapfiles/ms/icons/blue-dot.png"> Career Group,
+    <img src="http://maps.google.com/mapfiles/ms/icons/purple-dot.png"> Learning Center
+  </div>
+  <hr>
   <div class="map"></div>
 </div>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLDfQWtqjiEFfVNPa4wGnIEclpx8dcSrU"></script>
@@ -32,21 +38,22 @@
   var learningcenters = {{ learningcenters|json_encode|raw }};
 
   persons.forEach(function(person){
-    makeMarker(person.location_lat, person.location_lng);
+    makeMarker(person.location_lat, person.location_lng, "http://maps.google.com/mapfiles/ms/icons/red-dot.png");
   });
   careergroups.forEach(function(person){
-    makeMarker(person.location_lat, person.location_lng);
+    makeMarker(person.location_lat, person.location_lng, "http://maps.google.com/mapfiles/ms/icons/blue-dot.png");
   });
   learningcenters.forEach(function(person){
-    makeMarker(person.location_lat, person.location_lng);
+    makeMarker(person.location_lat, person.location_lng, "http://maps.google.com/mapfiles/ms/icons/purple-dot.png");
   });
 
-  function makeMarker(lat, lng) {
+  function makeMarker(lat, lng, icon) {
     var marker = new google.maps.Marker({
       position: {lat: parseFloat(lat), lng: parseFloat(lng)},
       map: map,
       title: '{{ item.first_name }} {{ item.last_name }}'
     });
+    marker.setIcon(icon);
   }
 })();
 </script>

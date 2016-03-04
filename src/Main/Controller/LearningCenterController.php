@@ -21,6 +21,21 @@ class LearningcenterController extends BaseController
     ]);
 	}
 
+  public function learningcenter(Request $req, Response $res, $attr = [])
+  {
+    $container = $this->slim->getContainer();
+    $db = $container->medoo;
+
+    $item = $db->get("learningcenter", "*", ["id"=> $attr["id"]]);
+    if(!$item) {
+      return $res->withHeader("Location", $req->getUri()->getBasePath()."/learningcenter");
+    }
+
+    return $container->view->render($res, "learningcenter/item.twig", [
+      "item"=> $item
+    ]);
+  }
+
   public function learningcenterGetAdd(Request $req, Response $res)
   {
     $container = $this->slim->getContainer();

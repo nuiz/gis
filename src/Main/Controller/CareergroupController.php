@@ -21,6 +21,21 @@ class CareergroupController extends BaseController
     ]);
 	}
 
+  public function careergroup(Request $req, Response $res, $attr = [])
+  {
+    $container = $this->slim->getContainer();
+    $db = $container->medoo;
+
+    $item = $db->get("careergroup", "*", ["id"=> $attr["id"]]);
+    if(!$item) {
+      return $res->withHeader("Location", $req->getUri()->getBasePath()."/careergroup");
+    }
+
+    return $container->view->render($res, "careergroup/item.twig", [
+      "item"=> $item
+    ]);
+  }
+
   public function careergroupGetAdd(Request $req, Response $res)
   {
     $container = $this->slim->getContainer();
