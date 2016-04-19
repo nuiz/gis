@@ -16,6 +16,7 @@ class AuthMiddleware
   public function __invoke(Request $req, Response $res, callable $next)
   {
     $path = $req->getUri()->getPath();
+    $path = "/".trim($path, "/");
     $allowNotAuth = ["/", "/login"];
     if(!in_array($path, $allowNotAuth)) {
       /** @var Aura\Session\Session */
