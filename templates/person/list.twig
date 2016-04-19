@@ -2,37 +2,41 @@
 
 {% block body %}
 <div class="container-fluid">
-  <h3>Person</h3>
-  <a href="{{ base_url() }}/person/add" class="btn btn-info">Add</a>
+  <h3>ประชากร</h3>
+  <a href="{{ base_url() }}/person/add" class="btn btn-info">เพิ่ม</a>
   <hr>
   <form>
     <div class="row">
       <div class="form-group col-md-3 text-center">
-        <label>Is Older</label><br>
-        <input type="checkbox" name="is_older" value="1" {% if form.is_older %}checked{% endif %}>
+        <label>ผู้สูงอายุ</label><br>
+        <select class="form-control" name="cripple_id">
+          <option value="">--เลือกผู้สูงอายุ--</option>
+          <option value="0">ไม่ใช่ผู้สูงอายุ</option>
+          <option value="1">เฉพาะผู้สูงอายุ</option>
+        </select>
       </div>
       <div class="form-group col-md-3">
-        <label>Cripple</label>
+        <label>ผู้พิการ</label>
         <select class="form-control" name="cripple_id">
-          <option value="">--None--</option>
+          <option value="">--เลือกผู้พิการ--</option>
           {% for cripple in cripples %}
           <option value="{{ cripple.id }}" {% if form.cripple_id == cripple.id %}selected{% endif %}>{{ cripple.name }}</option>
           {% endfor %}
         </select>
       </div>
       <div class="form-group col-md-3">
-        <label>Disavantaged</label>
+        <label>ผู้ด้อยโอกาศ</label>
         <select class="form-control" name="disa_id">
-          <option value="">--None--</option>
+          <option value="">--เลือกผู้ด้อยโอกาศ--</option>
           {% for disavantaged in disavantageds %}
           <option value="{{ disavantaged.id }}" {% if form.disa_id == disavantaged.id %}selected{% endif %}>{{ disavantaged.name }}</option>
           {% endfor %}
         </select>
       </div>
       <div class="form-group col-md-3">
-        <label>Scholar</label>
+        <label>ปราชญ์ชาวบ้าน</label>
         <select class="form-control" name="scho_id">
-          <option value="">--None--</option>
+          <option value="">--เลือกปราชญ์ชาวบ้าน--</option>
           {% for scholar in scholars %}
           <option value="{{ scholar.id }}" {% if form.scho_id == scholar.id %}selected{% endif %}>{{ scholar.name }}</option>
           {% endfor %}
@@ -40,26 +44,26 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="text-center">Keyword</label>
+      <label class="text-center">คำค้น</label>
       <input class="form-control" type="text" name="keyword" value="{{ form.keyword }}">
     </div>
     <div class="form-group">
-      <button class="form-control btn btn-info" type="submit">Filter</button>
+      <button class="form-control btn btn-info" type="submit">ค้นหา</button>
     </div>
   </form>
   <hr>
   <table class="table table-bordered">
     <tr>
       <th class="text-center">id</th>
-      <th class="text-center">Name</th>
-      <th class="text-center">Age</th>
-      <th class="text-center">Die Date</th>
-      <th class="text-center">Reg Date</th>
-      <th class="text-center">Is Older</th>
-      <th class="text-center">Cripper</th>
-      <th class="text-center">Disadvantaged</th>
-      <th class="text-center">Scholar</th>
-      <th class="text-center">Total Allowance</th>
+      <th class="text-center">ชื่อ</th>
+      <th class="text-center">อายุ</th>
+      <th class="text-center">เสียชีวิตเมื่อ</th>
+      <th class="text-center">ลงทะเบียนเมื่อ</th>
+      <th class="text-center">ผู้สูงอายุ</th>
+      <th class="text-center">ผู้พิการ</th>
+      <th class="text-center">ผู้ด้อยโอกาศ</th>
+      <th class="text-center">ปราชญ์ชาวบ้าน</th>
+      <th class="text-center">เบี้ยยังชีพรวม</th>
       <th></th>
     </tr>
     {% for item in items %}

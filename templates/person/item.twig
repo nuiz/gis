@@ -12,67 +12,67 @@
 }
 </style>
 <div class="container">
-  <h3>Person</h3>
+  <h3>ประชากร</h3>
   <div class="item-detail">
     <div class="row">
-      <div class="col-md-6">Name</div>
+      <div class="col-md-6">ชื่อ - นามสกุล</div>
       <div class="col-md-6">{{ item.first_name }} {{ item.last_name }}</div>
     </div>
     <div class="row">
-      <div class="col-md-6">Age</div>
-      <div class="col-md-6">{{ item.age }}</div>
+      <div class="col-md-6">วันเกิด</div>
+      <div class="col-md-6">{{ item.birthdate }}</div>
     </div>
     <div class="row">
-      <div class="col-md-6">Address</div>
+      <div class="col-md-6">ที่อยู่</div>
       <div class="col-md-6">{{ item.address }}</div>
     </div>
     <div class="row">
-      <div class="col-md-6">Village</div>
+      <div class="col-md-6">หมู่บ้าน</div>
       <div class="col-md-6">{{ item.village }}</div>
     </div>
     <div class="row">
-      <div class="col-md-6">District</div>
+      <div class="col-md-6">ตำบล</div>
       <div class="col-md-6">{{ item.district }}</div>
     </div>
     <div class="row">
-      <div class="col-md-6">City</div>
+      <div class="col-md-6">อำเภอ</div>
       <div class="col-md-6">{{ item.city }}</div>
     </div>
     <div class="row">
-      <div class="col-md-6">Provice</div>
+      <div class="col-md-6">จังหวัด</div>
       <div class="col-md-6">{{ item.province }}</div>
     </div>
     <div class="row">
-      <div class="col-md-6">Zipcode</div>
+      <div class="col-md-6">รหัสไปรษณีย์</div>
       <div class="col-md-6">{{ item.zipcode }}</div>
     </div>
     <div class="row">
-      <div class="col-md-6">Older</div>
+      <div class="col-md-6">ผู้สูงอายุ</div>
       <div class="col-md-6">{{ item.is_older ? 'Yes': 'No' }}</div>
     </div>
     <div class="row">
-      <div class="col-md-6">Cripple</div>
-      <div class="col-md-6">{{ item.cripple ? item.cripple.name ~ '('~ item.cripple.allowance ~')': '-' }}</div>
+      <div class="col-md-6">ผู้พิการ</div>
+      <div class="col-md-6">{{ item.cripple ? item.cripple.name ~ '('~ item.cripple.allowance ~' บาท)': '-' }}</div>
     </div>
     <div class="row">
-      <div class="col-md-6">Disavantaged</div>
-      <div class="col-md-6">{{ item.disavantaged ? item.disavantaged.name ~ '('~ item.disavantaged.allowance ~')': '-' }}</div>
+      <div class="col-md-6">ผู้ด้อยโอกาศ</div>
+      <div class="col-md-6">{{ item.disavantaged ? item.disavantaged.name ~ '('~ item.disavantaged.allowance ~' บาท)': '-' }}</div>
     </div>
     <div class="row">
-      <div class="col-md-6">Scholar</div>
-      <div class="col-md-6">{{ item.scholar ? item.scholar.name ~ '('~ item.scholar.allowance ~')': '-' }}</div>
+      <div class="col-md-6">ปราชญ์ชาวบ้าน</div>
+      <div class="col-md-6">{{ item.scholar ? item.scholar.name ~ '('~ item.scholar.allowance ~' บาท)': '-' }}</div>
     </div>
     <div class="row">
       <div class="col-md-12">
         <div class="text-center">
-          <strong>Map</strong>
+          <strong>แผนที่</strong>
         </div>
         <div class="map"></div>
       </div>
     </div>
   </div>
 </div>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLDfQWtqjiEFfVNPa4wGnIEclpx8dcSrU"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLDfQWtqjiEFfVNPa4wGnIEclpx8dcSrU&language=th"></script>
 <script type="text/javascript">
 (function(){
   "use strict";

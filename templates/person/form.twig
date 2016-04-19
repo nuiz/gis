@@ -2,65 +2,65 @@
 
 {% block body %}
 <div class="container">
-  <h3>Add Person</h3>
+  <h3>เพิ่มข้อมูลประชากร</h3>
   <form method="post">
     <div class="form-group">
-      <label>First Name</label>
+      <label>ชื่อ</label>
       <input type="text" class="form-control" name="first_name" value="{{ form.first_name }}">
     </div>
     <div class="form-group">
-      <label>Last Name</label>
+      <label>นามสกุล</label>
       <input type="text" class="form-control" name="last_name" value="{{ form.last_name }}">
     </div>
     <div class="form-group">
-      <label>Birth Date</label>
+      <label>วันเกิด</label>
       <input type="text" class="form-control datepicker" name="birth_date" value="{{ form.birth_date }}" readonly="">
     </div>
     <div class="form-group">
-      <label>Address</label>
+      <label>ที่อยู่</label>
       <textarea class="form-control" name="address">{{ form.address }}</textarea>
     </div>
     <div class="form-group">
-      <label>Village</label>
+      <label>หมู่บ้าน</label>
       <input type="text" class="form-control" name="village" value="{{ form.village }}">
     </div>
     <div class="form-group">
-      <label>District</label>
+      <label>ตำบล</label>
       <input type="text" class="form-control" name="district" value="{{ form.district }}">
     </div>
     <div class="form-group">
-      <label>City</label>
+      <label>อำเภอ</label>
       <input type="text" class="form-control" name="city" value="{{ form.city }}">
     </div>
     <div class="form-group">
-      <label>Province</label>
+      <label>จังหวัด</label>
       <input type="text" class="form-control" name="province" value="{{ form.province }}">
     </div>
     <div class="form-group">
-      <label>Zip code</label>
+      <label>รหัสไปรษณีย์</label>
       <input type="text" class="form-control" name="zipcode" value="{{ form.zipcode }}">
     </div>
     <div class="form-group">
-      <label>Latitude</label>
+      <label>ละติจูด</label>
       <input type="text" class="form-control" name="location_lat" value="{{ form.location_lat }}">
     </div>
     <div class="form-group">
-      <label>Longitude</label>
+      <label>ลองติจูด</label>
       <input type="text" class="form-control" name="location_lng" value="{{ form.location_lng }}">
     </div>
     <div class="form-group">
-      <label>Die Date</label>
+      <label>วันที่เสียชีวิต(ในกรณีที่เสียชีวิตไปแล้ว)</label>
       <input type="text" class="form-control datepicker" name="die_date" value="{{ form.die_date }}" readonly="">
     </div>
     <div class="form-group">
-      <label>Register Date</label>
+      <label>วันที่ลงทะเบียน</label>
       <input type="text" class="form-control datepicker" name="reg_date" value="{{ form.reg_date }}" readonly="">
     </div>
     <div class="form-group">
-      <label><input type="checkbox" name="is_older" value="1" {% if form.is_older %}checked{% endif %}> IS Older</label>
+      <label><input type="checkbox" name="is_older" value="1" {% if form.is_older %}checked{% endif %}> เป็นผู้สูงอายุ</label>
     </div>
     <div class="form-group">
-      <label>Cripple</label>
+      <label>ผู้พิการ</label>
       <select class="form-control" name="cripple_id">
         <option value="">--None--</option>
         {% for cripple in cripples %}
@@ -69,7 +69,7 @@
       </select>
     </div>
     <div class="form-group">
-      <label>Disavantaged</label>
+      <label>ผู้ด้อยโอกาศ</label>
       <select class="form-control" name="disa_id">
         <option value="">--None--</option>
         {% for disavantaged in disavantageds %}
@@ -78,7 +78,7 @@
       </select>
     </div>
     <div class="form-group">
-      <label>Scholar</label>
+      <label>ปราชญ์ชาวบ้าน</label>
       <select class="form-control" name="scho_id">
         <option value="">--None--</option>
         {% for scholar in scholars %}
@@ -87,8 +87,8 @@
       </select>
     </div>
     <div>
-      <button type="submit" class="btn btn-primary">Save</button>
-      <a class="btn btn-warning" href="{{ base_url() }}/person">Back to list</a>
+      <button type="submit" class="btn btn-primary">บันทึก</button>
+      <a class="btn btn-warning" href="{{ base_url() }}/person">กลับไปยังรายการ</a>
     </div>
   </form>
 </div>
