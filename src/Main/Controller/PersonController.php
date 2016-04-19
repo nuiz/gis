@@ -42,7 +42,9 @@ class PersonController extends BaseController
       $where["scho_id"] = $queryParams["scho_id"];
     }
     if(!empty($queryParams["keyword"])) {
-      $where["first_name[~]"] = "%".$queryParams["keyword"]."%";
+      $where["OR"] = [];
+      $where["OR"]["first_name[~]"] = "%".$queryParams["keyword"]."%";
+      $where["OR"]["last_name[~]"] = "%".$queryParams["keyword"]."%";
     }
     if(count($where) > 0) $where = ["AND"=> $where];
 
