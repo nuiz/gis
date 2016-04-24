@@ -10,22 +10,39 @@
   height: 500px;
   margin-bottom: 20px;
 }
+.panel-info-window {
+  margin-top: 26px;
+  margin-left: 26px;
+  min-width: 300px;
+}
 </style>
 <div class="container">
   <h3 class="text-center">แผนที่</h3>
   <div class="text-center">
-    <img src="http://maps.google.com/mapfiles/ms/icons/red-dot.png"> ประชากร,
-    <img src="http://maps.google.com/mapfiles/ms/icons/blue-dot.png"> กลุ่มอาชีพ,
-    <img src="http://maps.google.com/mapfiles/ms/icons/purple-dot.png"> ศูนย์การเรียนรู้
+    <img src="{{ base_url() }}/asset/images/marker/person-marker.png"> ประชากร,
+    <img src="{{ base_url() }}/asset/images/marker/group-marker.png"> กลุ่มอาชีพ,
+    <img src="{{ base_url() }}/asset/images/marker/lc-marker.png"> ศูนย์การเรียนรู้
   </div>
   <hr>
   <div class="map"></div>
 </div>
+<script type="text/template" id="template-info">
+  <div class="panel panel-info panel-info-window">
+    <div class="panel-heading">
+      <h3 class="panel-title"></h3>
+    </div>
+    <div class="panel-body">
+
+    </div>
+  </div>
+</script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLDfQWtqjiEFfVNPa4wGnIEclpx8dcSrU&language=th"></script>
 <script type="text/javascript">
 (function(){
   "use strict";
   // {lat: 15.231497, lng: 100.213483}
+
+  var templateInfo = $("#template-info").html();
 
   var mapEl = document.getElementsByClassName("map")[0];
   var map = new google.maps.Map(mapEl, {
@@ -37,21 +54,37 @@
   var careergroups = {{ careergroups|json_encode|raw }};
   var learningcenters = {{ learningcenters|json_encode|raw }};
 
-  persons.forEach(function(person){
-    makeMarker(person.location_lat, person.location_lng, "http://maps.google.com/mapfiles/ms/icons/red-dot.png");
+  persons.forEach(function(item){
+    makeMarker(item, "person", "{{ base_url() }}/asset/images/marker/person-marker.png");
   });
-  careergroups.forEach(function(person){
-    makeMarker(person.location_lat, person.location_lng, "http://maps.google.com/mapfiles/ms/icons/blue-dot.png");
+  careergroups.forEach(function(item){
+    makeMarker(item, "careergroup", "{{ base_url() }}/asset/images/marker/group-marker.png");
   });
-  learningcenters.forEach(function(person){
-    makeMarker(person.location_lat, person.location_lng, "http://maps.google.com/mapfiles/ms/icons/purple-dot.png");
+  learningcenters.forEach(function(item){
+    makeMarker(item, "learningcenter", "{{ base_url() }}/asset/images/marker/lc-marker.png");
   });
 
-  function makeMarker(lat, lng, icon) {
+  function makeMarker(item, type, icon) {
+    var position = {lat: parseFloat(item.location_lat), lng: parseFloat(item.location_lng)};
+    var title = type=="person"? item.first_name + ' ' + item.last_name : item.name;
+    var desc = type=="person"? item.first_name + ' ' + item.last_name : item.name;
+
     var marker = new google.maps.Marker({
-      position: {lat: parseFloat(lat), lng: parseFloat(lng)},
+      position: position,
       map: map,
-      title: '{{ item.first_name }} {{ item.last_name }}'
+      title: title
+    });
+
+    var $info = $(templateInfo);
+    $(".panel-title", $info).text(title);
+    $(".panel-body", $info).text(desc);
+
+    var infowindow = new google.maps.InfoWindow({
+      content: $info[0]
+    });
+
+    marker.addListener('click', function() {
+      infowindow.open(map, marker);
     });
     marker.setIcon(icon);
   }

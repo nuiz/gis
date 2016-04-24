@@ -52,15 +52,30 @@
     </div>
     <div class="row">
       <div class="col-md-6">ผู้พิการ</div>
-      <div class="col-md-6">{{ item.cripple ? item.cripple.name ~ '('~ item.cripple.allowance ~' บาท)': '-' }}</div>
+      <div class="col-md-6">
+        {% if item.cripple|length ==0 %}-{% endif %}
+        {% for cripple in item.cripple %}
+        <div>{{ cripple.name ~'('~ cripple.allowance ~' บาท)' }}</div>
+        {% endfor %}
+      </div>
     </div>
     <div class="row">
       <div class="col-md-6">ผู้ด้อยโอกาศ</div>
-      <div class="col-md-6">{{ item.disavantaged ? item.disavantaged.name ~ '('~ item.disavantaged.allowance ~' บาท)': '-' }}</div>
+      <div class="col-md-6">
+      {% if item.disavantaged|length ==0 %}-{% endif %}
+      {% for disavantaged in item.disavantaged %}
+      <div>{{ disavantaged.name ~'('~ disavantaged.allowance ~' บาท)' }}</div>
+      {% endfor %}
+    </div>
     </div>
     <div class="row">
       <div class="col-md-6">ปราชญ์ชาวบ้าน</div>
-      <div class="col-md-6">{{ item.scholar ? item.scholar.name ~ '('~ item.scholar.allowance ~' บาท)': '-' }}</div>
+      <div class="col-md-6">
+      {% if item.scholar|length ==0 %}-{% endif %}
+      {% for scholar in item.scholar %}
+      <div>{{ scholar.name ~'('~ scholar.allowance ~' บาท)' }}</div>
+      {% endfor %}
+    </div>
     </div>
     <div class="row">
       <div class="col-md-12">
