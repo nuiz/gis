@@ -4,7 +4,8 @@
         "slim/twig-view": "*",
         "twig/twig": "*",
         "catfan/Medoo": "*",
-        "aura/session": "*"
+        "aura/session": "*",
+        "phpoffice/phpexcel": "^1.8"
     },
     "autoload": {
       "psr-0": {

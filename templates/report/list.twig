@@ -7,11 +7,13 @@
 <div class="container">
   <h3 class="text-center">ดาวน์โหลดข้อมูล</h3>
   <hr>
-  <form class="form-inline text-center">
+  <form class="form-inline text-center" action="{{ base_url() }}/report_reg">
     <div class="form-group">
       <label>ดาวน์โหลดรายงานการลงทะเบียนใหม่ประจำปี</label>
       <select name="year" class="form-control">
-        <option>2559</option>
+        {% for y in reg_year %}
+        <option>{{ y+543 }}</option>
+        {% endfor %}
       </select>
     </div>
     <div class="form-group">
@@ -19,11 +21,13 @@
     </div>
   </form>
   <hr>
-  <form class="form-inline text-center">
+  <form class="form-inline text-center" action="{{ base_url() }}/report_die">
     <div class="form-group">
       <label>ดาวน์โหลดรายงานผู้เสียชีวิตประจำปี</label>
       <select name="year" class="form-control">
-        <option>2559</option>
+        {% for y in die_year %}
+        <option>{{ y+543 }}</option>
+        {% endfor %}
       </select>
     </div>
     <div class="form-group">

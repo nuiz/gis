@@ -62,7 +62,6 @@
     <div class="form-group">
       <label>ผู้พิการ</label>
       <select class="form-control select2" name="cripple_id[]" multiple>
-        <option value="">--None--</option>
         {% for cripple in cripples %}
         <option value="{{ cripple.id }}" {% if cripple.id in form.cripple_id %}selected{% endif %}>{{ cripple.name }}</option>
         {% endfor %}
@@ -71,7 +70,6 @@
     <div class="form-group">
       <label>ผู้ด้อยโอกาศ</label>
       <select class="form-control select2" name="disa_id[]" multiple>
-        <option value="">--None--</option>
         {% for disavantaged in disavantageds %}
         <option value="{{ disavantaged.id }}" {% if disavantaged.id in form.disa_id %}selected{% endif %}>{{ disavantaged.name }}</option>
         {% endfor %}
@@ -80,7 +78,6 @@
     <div class="form-group">
       <label>ปราชญ์ชาวบ้าน</label>
       <select class="form-control select2" name="scho_id[]" multiple>
-        <option value="">--None--</option>
         {% for scholar in scholars %}
         <option value="{{ scholar.id }}" {% if scholar.id in form.scho_id %}selected{% endif %}>{{ scholar.name }}</option>
         {% endfor %}

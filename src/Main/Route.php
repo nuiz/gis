@@ -79,5 +79,7 @@ class Route
 
 		$this->slim->get('/map', MapController::class. ':map');
 		$this->slim->get('/report', ReportController::class. ':report');
+		$this->slim->get('/report_die', ReportController::class. ':reportDie');
+		$this->slim->get('/report_reg', ReportController::class. ':reportReg');
 	}
 }

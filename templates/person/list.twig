@@ -6,7 +6,7 @@
   <hr>
   <form>
     <div class="row">
-      <div class="form-group col-md-3 text-center">
+      <div class="form-group col-md-3">
         <label>ผู้สูงอายุ</label><br>
         <select class="form-control" name="cripple_id">
           <option value="">--เลือกผู้สูงอายุ--</option>
@@ -41,13 +41,14 @@
           {% endfor %}
         </select>
       </div>
-    </div>
-    <div class="form-group">
-      <label class="text-center">คำค้น</label>
-      <input class="form-control" type="text" name="keyword" value="{{ form.keyword }}">
-    </div>
-    <div class="form-group">
-      <button class="form-control btn btn-info" type="submit">ค้นหา</button>
+      <div class="form-group col-md-3">
+        <label class="text-center">คำค้น</label>
+        <input class="form-control" type="text" name="keyword" value="{{ form.keyword }}">
+      </div>
+      <div class="form-group col-md-3">
+        <label style="color: transparent;">ค้นหา</label>
+        <button class="form-control btn btn-info" type="submit">ค้นหา</button>
+      </div>
     </div>
   </form>
   <hr>
