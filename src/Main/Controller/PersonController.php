@@ -5,6 +5,9 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Http\ResponseInterface;
 use Main\Service\XMLService;
+use Main\Service\CrippleService;
+use Main\Service\DisavantagedService;
+use Main\Service\ScholarService;
 
 class PersonController extends BaseController
 {
@@ -18,9 +21,9 @@ class PersonController extends BaseController
     // $session->commit();
 
     $oldersService = XMLService::getInstance("olders");
-    $cripplesService = XMLService::getInstance("cripples");
-    $disavantagedsService = XMLService::getInstance("disavantageds");
-    $scholarsService = XMLService::getInstance("scholars");
+    $cripplesService = new CrippleService($db);
+    $disavantagedsService = new DisavantagedService($db);
+    $scholarsService = new ScholarService($db);
 
     $olders = $oldersService->gets();
     $cripples = $cripplesService->gets();
@@ -33,13 +36,13 @@ class PersonController extends BaseController
       $where["is_older"] = $queryParams["is_older"];
     }
     if(!empty($queryParams["cripple_id"])) {
-      $where["cripple_id"] = $queryParams["cripple_id"];
+      $where["person_cripple.cripple_id"] = $queryParams["cripple_id"];
     }
     if(!empty($queryParams["disa_id"])) {
-      $where["disa_id"] = $queryParams["disa_id"];
+      $where["person_disavantaged.disavantaged_id"] = $queryParams["disa_id"];
     }
     if(!empty($queryParams["scho_id"])) {
-      $where["scho_id"] = $queryParams["scho_id"];
+      $where[".person_scholar.scholar_id"] = $queryParams["scho_id"];
     }
     if(!empty($queryParams["keyword"])) {
       $where["OR"] = [];
@@ -47,8 +50,23 @@ class PersonController extends BaseController
       $where["OR"]["last_name[~]"] = "%".$queryParams["keyword"]."%";
     }
     if(count($where) > 0) $where = ["AND"=> $where];
+    $where["GROUP"] = "person.id";
 
-    $items = $db->select("person", "*", $where);
+    $join = [
+      "[>]person_cripple"=> ["id"=> "person_id"],
+      "[>]person_disavantaged"=> ["id"=> "person_id"],
+      "[>]person_scholar"=> ["id"=> "person_id"]
+    ];
+    $column = [
+      "person.id",
+      "person.first_name",
+      "person.last_name",
+      "person.reg_date",
+      "person.die_date",
+      "person.birth_date",
+      "person.is_older"
+    ];
+    $items = $db->select("person", $join, $column, $where);
     $this->buildItems($items);
 
     // var_dump($items[0]); exit();
@@ -68,9 +86,9 @@ class PersonController extends BaseController
     $container = $this->slim->getContainer();
     $db = $container->medoo;
 
-    $cripplesService = XMLService::getInstance("cripples");
-    $disavantagedsService = XMLService::getInstance("disavantageds");
-    $scholarsService = XMLService::getInstance("scholars");
+    $cripplesService = new CrippleService($db);
+    $disavantagedsService = new DisavantagedService($db);
+    $scholarsService = new ScholarService($db);
 
     $item = $db->get("person", "*", ["id"=> $attr["id"]]);
     if(!$item) {
@@ -91,10 +109,11 @@ class PersonController extends BaseController
   public function personGetAdd(Request $req, Response $res)
   {
     $container = $this->slim->getContainer();
+    $db = $container->medoo;
 
-    $cripplesService = XMLService::getInstance("cripples");
-    $disavantagedsService = XMLService::getInstance("disavantageds");
-    $scholarsService = XMLService::getInstance("scholars");
+    $cripplesService = new CrippleService($db);
+    $disavantagedsService = new DisavantagedService($db);
+    $scholarsService = new ScholarService($db);
 
     return $container->view->render($res, "person/form.twig", [
       "cripples"=> $cripplesService->gets(),
@@ -108,14 +127,15 @@ class PersonController extends BaseController
     $container = $this->slim->getContainer();
     $db = $container->medoo;
 
-    $cripplesService = XMLService::getInstance("cripples");
-    $disavantagedsService = XMLService::getInstance("disavantageds");
-    $scholarsService = XMLService::getInstance("scholars");
+    $cripplesService = new CrippleService($db);
+    $disavantagedsService = new DisavantagedService($db);
+    $scholarsService = new ScholarService($db);
     $postBody = $req->getParsedBody();
 
     $insertParams = $this->adapterParams($postBody);
 
-    if($db->insert("person", $insertParams)) {
+    $id = $db->insert("person", $insertParams["person"]);
+    if($id && $this->saveType($id, $insertParams)) {
       return $res->withHeader("Location", $req->getUri()->getBasePath()."/person");
     }
 
@@ -132,14 +152,22 @@ class PersonController extends BaseController
     $container = $this->slim->getContainer();
     $db = $container->medoo;
 
-    $cripplesService = XMLService::getInstance("cripples");
-    $disavantagedsService = XMLService::getInstance("disavantageds");
-    $scholarsService = XMLService::getInstance("scholars");
+    $cripplesService = new CrippleService($db);
+    $disavantagedsService = new DisavantagedService($db);
+    $scholarsService = new ScholarService($db);
 
     $item = $db->get("person", "*", ["id"=> $attr["id"]]);
     if(!$item) {
       return $res->withHeader("Location", $req->getUri()->getBasePath()."/person");
     }
+
+    $item["cripple_id"] = $db->select("person_cripple", "*", ["person_id"=> $attr["id"]]);
+    $item["disa_id"] = $db->select("person_disavantaged", "*", ["person_id"=> $attr["id"]]);
+    $item["scho_id"] = $db->select("person_scholar", "*", ["person_id"=> $attr["id"]]);
+
+    $item["cripple_id"] = array_map(function($item){ return $item["cripple_id"]; }, $item["cripple_id"]);
+    $item["disa_id"] = array_map(function($item){ return $item["disavantaged_id"]; }, $item["disa_id"]);
+    $item["scho_id"] = array_map(function($item){ return $item["scholar_id"]; }, $item["scho_id"]);
 
     return $container->view->render($res, "person/form.twig", [
       "form"=> $item,
@@ -154,14 +182,16 @@ class PersonController extends BaseController
     $container = $this->slim->getContainer();
     $db = $container->medoo;
 
-    $cripplesService = XMLService::getInstance("cripples");
-    $disavantagedsService = XMLService::getInstance("disavantageds");
-    $scholarsService = XMLService::getInstance("scholars");
+    $cripplesService = new CrippleService($db);
+    $disavantagedsService = new DisavantagedService($db);
+    $scholarsService = new ScholarService($db);
     $postBody = $req->getParsedBody();
 
     $editParams = $this->adapterParams($postBody);
 
-    if($db->update("person", $editParams, ["id"=> $attr["id"]])) {
+    // var_dump($editParams); exit();
+
+    if($db->update("person", $editParams["person"], ["id"=> $attr["id"]]) && $this->saveType($attr["id"], $editParams)) {
       return $res->withHeader("Location", $req->getUri()->getBasePath()."/person");
     }
 
@@ -185,15 +215,50 @@ class PersonController extends BaseController
   public function adapterParams($input)
   {
     $dateRegex = "/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/";
-    $params = $input;
-    $params["is_older"] = @$input["is_older"]?: 0;
-    $params["created_at"] = date("Y-m-d H:i:s");
-    $params["updated_at"] = date("Y-m-d H:i:s");
-    $params["die_date"] = preg_match($dateRegex, $input["die_date"])? $input["die_date"]: null;
-    $params["reg_date"] = preg_match($dateRegex, $input["reg_date"])? $input["reg_date"]: null;
-    $params["birth_date"] = preg_match($dateRegex, $input["birth_date"])? $input["birth_date"]: null;
+    $person = $input;
+    $person["is_older"] = @$input["is_older"]?: 0;
+    $person["created_at"] = date("Y-m-d H:i:s");
+    $person["updated_at"] = date("Y-m-d H:i:s");
+    $person["die_date"] = preg_match($dateRegex, $input["die_date"])? $input["die_date"]: null;
+    $person["reg_date"] = preg_match($dateRegex, $input["reg_date"])? $input["reg_date"]: null;
+    $person["birth_date"] = preg_match($dateRegex, $input["birth_date"])? $input["birth_date"]: null;
 
+    $cripple = is_array(@$person["cripple_id"])? $person["cripple_id"]: [];
+    $disavantaged = is_array(@$person["disa_id"])? $person["disa_id"]: [];
+    $scholar = is_array(@$person["scho_id"])? $person["scho_id"]: [];
+    unset($person["cripple_id"]);
+    unset($person["disa_id"]);
+    unset($person["scho_id"]);
+
+    $params = [
+      "person"=> $person,
+      "cripple"=> $cripple,
+      "disavantaged"=> $disavantaged,
+      "scholar"=> $scholar
+    ];
     return $params;
+  }
+
+  public function saveType($personId, $adapterParams)
+  {
+    $container = $this->slim->getContainer();
+    $db = $container->medoo;
+
+    $db->delete("person_cripple", ["person_id"=> $personId]);
+    $db->delete("person_disavantaged", ["person_id"=> $personId]);
+    $db->delete("person_scholar", ["person_id"=> $personId]);
+
+    foreach($adapterParams["cripple"] as $val) {
+      $db->insert("person_cripple", ["person_id"=> $personId, "cripple_id"=> $val]);
+    }
+    foreach($adapterParams["disavantaged"] as $val) {
+      $db->insert("person_disavantaged", ["person_id"=> $personId, "disavantaged_id"=> $val]);
+    }
+    foreach($adapterParams["scholar"] as $val) {
+      $db->insert("person_scholar", ["person_id"=> $personId, "scholar_id"=> $val]);
+    }
+
+    return true;
   }
 
   public function buildItems(&$items)
@@ -205,27 +270,40 @@ class PersonController extends BaseController
 
   public function buildItem(&$item)
   {
+    $container = $this->slim->getContainer();
+    $db = $container->medoo;
+
     $dateRegex = "/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/";
 
     $oldersService = XMLService::getInstance("olders");
-    $cripplesService = XMLService::getInstance("cripples");
-    $disavantagedsService = XMLService::getInstance("disavantageds");
-    $scholarsService = XMLService::getInstance("scholars");
+    $cripplesService = new CrippleService($db);
+    $disavantagedsService = new DisavantagedService($db);
+    $scholarsService = new ScholarService($db);
 
     $item["age"] = preg_match($dateRegex, $item["birth_date"])?
       \DateTime::createFromFormat('Y-m-d', $item["birth_date"])->diff(new \DateTime('now'))->y:
       null;
 
     $item["older"] = $oldersService->getBy(["min[<=]"=> $item["age"], "max[>=]"=> $item["age"]]);
-    $item["cripple"] = $cripplesService->getBy(["id"=> $item["cripple_id"]]);
-    $item["disavantaged"] = $disavantagedsService->getBy(["id"=> $item["disa_id"]]);
-    $item["scholar"] = $scholarsService->getBy(["id"=> $item["scho_id"]]);
+    $item["cripple"] = $db->select("person_cripple", ["[>]cripple_type"=> ["cripple_id"=> "id"]], "*", ["person_id"=> $item["id"]]);
+    $item["disavantaged"] = $db->select("person_disavantaged", ["[>]disavantaged_type"=> ["disavantaged_id"=> "id"]], "*", ["person_id"=> $item["id"]]);
+    $item["scholar"] = $db->select("person_scholar", ["[>]scholar_type"=> ["scholar_id"=> "id"]], "*", ["person_id"=> $item["id"]]);
 
     $item["total_allowance"] = 0;
     $item["total_allowance"] += $item["is_older"]? @$item["older"]["allowance"]: 0;
-    $item["total_allowance"] += @$item["cripple"]["allowance"];
-    $item["total_allowance"] += @$item["disavantaged"]["allowance"];
-    $item["total_allowance"] += @$item["scholar"]["allowance"];
+
+    foreach($item["cripple"] as $val) {
+      $item["total_allowance"] += $val["allowance"];
+    }
+    foreach($item["disavantaged"] as $val) {
+      $item["total_allowance"] += $val["allowance"];
+    }
+    foreach($item["scholar"] as $val) {
+      $item["total_allowance"] += $val["allowance"];
+    }
+    // $item["total_allowance"] += @$item["cripple"]["allowance"];
+    // $item["total_allowance"] += @$item["disavantaged"]["allowance"];
+    // $item["total_allowance"] += @$item["scholar"]["allowance"];
   }
 
 }

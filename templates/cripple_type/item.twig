@@ -1,0 +1,30 @@
+{% extends "layout.twig" %}
+
+{% block body %}
+<style media="screen">
+.item-detail .row {
+  border-bottom: 1px solid rgb(158, 158, 158);
+}
+.map {
+  border: 3px solid rgb(158, 158, 158);
+  height: 500px;
+  margin-bottom: 20px;
+}
+</style>
+<div class="container">
+  <h3>ประเภทผู้พิการ</h3>
+  <div class="item-detail">
+    <div class="row">
+      <div class="col-md-6">ชื่อ</div>
+      <div class="col-md-6">{{ item.name }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">เบี้ย</div>
+      <div class="col-md-6">{{ item.allowance }}</div>
+    </div>
+    <div>
+      <a class="btn btn-warning" href="{{ base_url() }}/cripple_type">กลับไปยังรายการ</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

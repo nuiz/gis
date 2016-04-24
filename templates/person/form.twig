@@ -2,7 +2,7 @@
 
 {% block body %}
 <div class="container">
-  <h3>เพิ่มข้อมูลประชากร</h3>
+  <h3>ข้อมูลประชากร</h3>
   <form method="post">
     <div class="form-group">
       <label>ชื่อ</label>
@@ -61,28 +61,28 @@
     </div>
     <div class="form-group">
       <label>ผู้พิการ</label>
-      <select class="form-control" name="cripple_id">
+      <select class="form-control select2" name="cripple_id[]" multiple>
         <option value="">--None--</option>
         {% for cripple in cripples %}
-        <option value="{{ cripple.id }}" {% if form.cripple_id == cripple.id %}selected{% endif %}>{{ cripple.name }}</option>
+        <option value="{{ cripple.id }}" {% if cripple.id in form.cripple_id %}selected{% endif %}>{{ cripple.name }}</option>
         {% endfor %}
       </select>
     </div>
     <div class="form-group">
       <label>ผู้ด้อยโอกาศ</label>
-      <select class="form-control" name="disa_id">
+      <select class="form-control select2" name="disa_id[]" multiple>
         <option value="">--None--</option>
         {% for disavantaged in disavantageds %}
-        <option value="{{ disavantaged.id }}" {% if form.disa_id == disavantaged.id %}selected{% endif %}>{{ disavantaged.name }}</option>
+        <option value="{{ disavantaged.id }}" {% if disavantaged.id in form.disa_id %}selected{% endif %}>{{ disavantaged.name }}</option>
         {% endfor %}
       </select>
     </div>
     <div class="form-group">
       <label>ปราชญ์ชาวบ้าน</label>
-      <select class="form-control" name="scho_id">
+      <select class="form-control select2" name="scho_id[]" multiple>
         <option value="">--None--</option>
         {% for scholar in scholars %}
-        <option value="{{ scholar.id }}" {% if form.scho_id == scholar.id %}selected{% endif %}>{{ scholar.name }}</option>
+        <option value="{{ scholar.id }}" {% if scholar.id in form.scho_id %}selected{% endif %}>{{ scholar.name }}</option>
         {% endfor %}
       </select>
     </div>
@@ -92,4 +92,14 @@
     </div>
   </form>
 </div>
+<script type="text/javascript" src="{{ base_url() }}/asset/select2/js/select2.min.js"></script>
+<script type="text/javascript" src="{{ base_url() }}/asset/select2/js/i18n/th.js"></script>
+<link rel="stylesheet" href="{{ base_url() }}/asset/select2/css/select2.min.css">
+<script type="text/javascript">
+$(function(){
+  $('.select2').select2({
+    // maximumSelectionLength: 2
+  });
+});
+</script>
 {% endblock %}

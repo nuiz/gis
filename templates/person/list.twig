@@ -2,7 +2,7 @@
 
 {% block body %}
 <div class="container-fluid">
-  <h3>ประชากร</h3>
+  <h3>ข้อมูลประชากร</h3>
   <a href="{{ base_url() }}/person/add" class="btn btn-info">เพิ่ม</a>
   <hr>
   <form>
@@ -74,9 +74,21 @@
       <td class="text-center">{{ item.die_date==null? '-': item.die_date|date("d/m/Y") }}</td>
       <td class="text-center">{{ item.reg_date==null? '-': item.reg_date|date("d/m/Y") }}</td>
       <td class="text-center"><span class="badge">{{ item.is_older ? 'Yes': 'No' }}</span></td>
-      <td>{{ item.cripple.name }}</td>
-      <td>{{ item.disavantaged.name }}</td>
-      <td>{{ item.scholar.name }}</td>
+      <td>
+        {% for cripple in item.cripple %}
+        <div>{{ cripple.name }}</div>
+        {% endfor %}
+      </td>
+      <td>
+        {% for disavantaged in item.disavantaged %}
+        <div>{{ disavantaged.name }}</div>
+        {% endfor %}
+      </td>
+      <td>
+        {% for scholar in item.scholar %}
+        <div>{{ scholar.name }}</div>
+        {% endfor %}
+      </td>
       <td class="text-center">{{ item.total_allowance|number_format }}</td>
       <td>
         <a href="{{ base_url() }}/person/edit/{{ item.id }}"><i class="glyphicon glyphicon-pencil"></i></a>
