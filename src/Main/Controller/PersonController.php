@@ -209,6 +209,9 @@ class PersonController extends BaseController
     $db = $container->medoo;
 
     $db->delete("person", ["id"=> $attr["id"]]);
+    $db->delete("person_cripple", ["person_id"=> $attr["id"]]);
+    $db->delete("person_disavantaged", ["person_id"=> $attr["id"]]);
+    $db->delete("person_scholar", ["person_id"=> $attr["id"]]);
     return $res->withHeader("Location", $req->getUri()->getBasePath()."/person");
   }
 

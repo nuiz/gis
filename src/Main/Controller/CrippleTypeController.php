@@ -98,6 +98,7 @@ class CrippleTypeController extends BaseController
     $db = $container->medoo;
 
     $db->delete("cripple_type", ["id"=> $attr["id"]]);
+    $db->delete("person_cripple", ["cripple_id"=> $attr["id"]]);
     return $res->withHeader("Location", $req->getUri()->getBasePath()."/cripple_type");
   }
 

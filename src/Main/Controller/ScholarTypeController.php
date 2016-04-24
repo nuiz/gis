@@ -98,6 +98,7 @@ class ScholarTypeController extends BaseController
     $db = $container->medoo;
 
     $db->delete("scholar_type", ["id"=> $attr["id"]]);
+    $db->delete("person_scholar", ["scholar_id"=> $attr["id"]]);
     return $res->withHeader("Location", $req->getUri()->getBasePath()."/scholar_type");
   }
 

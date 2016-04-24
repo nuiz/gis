@@ -98,6 +98,7 @@ class DisavantagedTypeController extends BaseController
     $db = $container->medoo;
 
     $db->delete("disavantaged_type", ["id"=> $attr["id"]]);
+    $db->delete("person_disavantaged", ["disavantaged_id"=> $attr["id"]]);
     return $res->withHeader("Location", $req->getUri()->getBasePath()."/disavantaged_type");
   }
 
