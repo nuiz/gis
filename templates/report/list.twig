@@ -1,0 +1,34 @@
+{% extends "layout.twig" %}
+
+{% block body %}
+<style media="screen">
+
+</style>
+<div class="container">
+  <h3 class="text-center">ดาวน์โหลดข้อมูล</h3>
+  <hr>
+  <form class="form-inline text-center">
+    <div class="form-group">
+      <label>ดาวน์โหลดรายงานการลงทะเบียนใหม่ประจำปี</label>
+      <select name="year" class="form-control">
+        <option>2559</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-success">ดาวโหลด</button>
+    </div>
+  </form>
+  <hr>
+  <form class="form-inline text-center">
+    <div class="form-group">
+      <label>ดาวน์โหลดรายงานผู้เสียชีวิตประจำปี</label>
+      <select name="year" class="form-control">
+        <option>2559</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-success">ดาวโหลด</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

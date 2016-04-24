@@ -7,6 +7,7 @@ use Main\Controller\PersonController;
 use Main\Controller\CareergroupController;
 use Main\Controller\LearningcenterController;
 use Main\Controller\MapController;
+use Main\Controller\ReportController;
 use Main\Controller\CrippleTypeController;
 use Main\Controller\DisavantagedTypeController;
 use Main\Controller\ScholarTypeController;
@@ -77,5 +78,6 @@ class Route
 		$this->slim->get('/learningcenter/remove/{id:[0-9]+}', LearningcenterController::class. ':learningcenterRemove');
 
 		$this->slim->get('/map', MapController::class. ':map');
+		$this->slim->get('/report', ReportController::class. ':report');
 	}
 }
