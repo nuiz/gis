@@ -106,17 +106,18 @@ class ReportController extends BaseController
 
     foreach($items as $key => $item) {
       if($key == 0) {
-        $sheet->SetCellValue('A'.'1', "ชื่อ");
-        $sheet->SetCellValue('B'.'1', "นามสกุล");
-        $sheet->SetCellValue('C'.'1', "วันเกิด");
-        $sheet->SetCellValue('D'.'1', "ที่อยู่");
-        $sheet->SetCellValue('E'.'1', "หมู่บ้าน");
-        $sheet->SetCellValue('F'.'1', "ตำบล");
-        $sheet->SetCellValue('G'.'1', "อำเภอ");
-        $sheet->SetCellValue('H'.'1', "จังหวัด");
-        $sheet->SetCellValue('I'.'1', "รหัสไปรษณีย์");
-        $sheet->SetCellValue('J'.'1', "วันที่ลงทะเบียน");
-        $sheet->SetCellValue('K'.'1', "วันที่เสียชีวิต");
+        $sheet->SetCellValue('A'.'1', "เลขที่บัตรประชาชน");
+        $sheet->SetCellValue('B'.'1', "ชื่อ");
+        $sheet->SetCellValue('C'.'1', "นามสกุล");
+        $sheet->SetCellValue('D'.'1', "วันเกิด");
+        $sheet->SetCellValue('E'.'1', "ที่อยู่");
+        $sheet->SetCellValue('F'.'1', "หมู่บ้าน");
+        $sheet->SetCellValue('G'.'1', "ตำบล");
+        $sheet->SetCellValue('H'.'1', "อำเภอ");
+        $sheet->SetCellValue('I'.'1', "จังหวัด");
+        $sheet->SetCellValue('J'.'1', "รหัสไปรษณีย์");
+        $sheet->SetCellValue('K'.'1', "วันที่ลงทะเบียน");
+        $sheet->SetCellValue('L'.'1', "วันที่เสียชีวิต");
       }
 
       $i = $key+2;
@@ -136,17 +137,18 @@ class ReportController extends BaseController
       $rStr = @date('d/m/', $rTime).$rYear;
       $rStr = $rStr?: "";
 
-      $sheet->SetCellValue('A'.$i, $item["first_name"]);
-      $sheet->SetCellValue('B'.$i, $item["last_name"]);
-      $sheet->SetCellValue('C'.$i, $bStr);
-      $sheet->SetCellValue('D'.$i, $item["address"]);
-      $sheet->SetCellValue('E'.$i, $item["village"]);
-      $sheet->SetCellValue('F'.$i, $item["district"]);
-      $sheet->SetCellValue('G'.$i, $item["city"]);
-      $sheet->SetCellValue('H'.$i, $item["province"]);
-      $sheet->SetCellValue('I'.$i, $item["zipcode"]);
-      $sheet->SetCellValue('J'.$i, $rStr);
-      $sheet->SetCellValue('K'.$i, $dStr);
+      $sheet->SetCellValue('A'.$i, $item["card_id"]);
+      $sheet->SetCellValue('B'.$i, $item["first_name"]);
+      $sheet->SetCellValue('C'.$i, $item["last_name"]);
+      $sheet->SetCellValue('D'.$i, $bStr);
+      $sheet->SetCellValue('E'.$i, $item["address"]);
+      $sheet->SetCellValue('F'.$i, $item["village"]);
+      $sheet->SetCellValue('G'.$i, $item["district"]);
+      $sheet->SetCellValue('H'.$i, $item["city"]);
+      $sheet->SetCellValue('I'.$i, $item["province"]);
+      $sheet->SetCellValue('J'.$i, $item["zipcode"]);
+      $sheet->SetCellValue('K'.$i, $rStr);
+      $sheet->SetCellValue('L'.$i, $dStr);
     }
 
     return PHPExcel_IOFactory::createWriter($excel, 'Excel5');

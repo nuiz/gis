@@ -8,14 +8,12 @@
     <tr>
       <th class="text-center">id</th>
       <th class="text-center">ชื่อ</th>
-      <th class="text-center">เบี้ย</th>
       <th></th>
     </tr>
     {% for item in items %}
     <tr>
       <td class="text-center">{{ item.id }}</td>
       <td><a href="{{ base_url() }}/scholar_type/{{ item.id }}">{{ item.name }}</a></td>
-        <td class="text-center">{{ item.allowance }}</td>
       <td>
         <a href="{{ base_url() }}/scholar_type/edit/{{ item.id }}"><i class="glyphicon glyphicon-pencil"></i></a>
         <a class="remove-btn" href="{{ base_url() }}/scholar_type/remove/{{ item.id }}"><i class="glyphicon glyphicon-remove"></i></a>

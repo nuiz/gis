@@ -30,6 +30,9 @@
         <div class="map"></div>
       </div>
     </div>
+    <div>
+      <a class="btn btn-warning" href="{{ base_url() }}/learningcenter">กลับไปยังรายการ</a>
+    </div>
   </div>
 </div>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLDfQWtqjiEFfVNPa4wGnIEclpx8dcSrU"></script>
@@ -50,6 +53,8 @@
     map: map,
     title: '{{ item.first_name }} {{ item.last_name }}'
   });
+
+  marker.setIcon("{{ base_url() }}/asset/images/marker/lc-marker.png");
 })();
 </script>
 {% endblock %}

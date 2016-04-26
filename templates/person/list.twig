@@ -55,6 +55,7 @@
   <table class="table table-bordered">
     <tr>
       <th class="text-center">id</th>
+      <th class="text-center">เลขที่บัตรประชาชน</th>
       <th class="text-center">ชื่อ</th>
       <th class="text-center">อายุ</th>
       <th class="text-center">เสียชีวิตเมื่อ</th>
@@ -69,6 +70,7 @@
     {% for item in items %}
     <tr>
       <td class="text-center">{{ item.id }}</td>
+      <td class="text-center">{{ item.card_id }}</td>
       <td><a href="{{ base_url() }}/person/{{ item.id }}">{{ item.first_name }} {{ item.last_name }}</a></td>
       <td>{{ item.age }}</td>
       <td class="text-center">{{ item.die_date==null? '-': item.die_date|date("d/m/Y") }}</td>

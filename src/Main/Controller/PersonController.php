@@ -48,6 +48,7 @@ class PersonController extends BaseController
       $where["OR"] = [];
       $where["OR"]["first_name[~]"] = "%".$queryParams["keyword"]."%";
       $where["OR"]["last_name[~]"] = "%".$queryParams["keyword"]."%";
+      $where["OR"]["card_id[~]"] = "%".$queryParams["keyword"]."%";
     }
     if(count($where) > 0) $where = ["AND"=> $where];
     $where["GROUP"] = "person.id";
@@ -59,6 +60,7 @@ class PersonController extends BaseController
     ];
     $column = [
       "person.id",
+      "person.card_id",
       "person.first_name",
       "person.last_name",
       "person.reg_date",
@@ -295,18 +297,19 @@ class PersonController extends BaseController
     $item["total_allowance"] = 0;
     $item["total_allowance"] += $item["is_older"]? @$item["older"]["allowance"]: 0;
 
-    foreach($item["cripple"] as $val) {
-      $item["total_allowance"] += $val["allowance"];
-    }
-    foreach($item["disavantaged"] as $val) {
-      $item["total_allowance"] += $val["allowance"];
-    }
-    foreach($item["scholar"] as $val) {
-      $item["total_allowance"] += $val["allowance"];
-    }
-    // $item["total_allowance"] += @$item["cripple"]["allowance"];
-    // $item["total_allowance"] += @$item["disavantaged"]["allowance"];
-    // $item["total_allowance"] += @$item["scholar"]["allowance"];
+    // foreach($item["cripple"] as $val) {
+    //   $item["total_allowance"] += $val["allowance"];
+    // }
+    // foreach($item["disavantaged"] as $val) {
+    //   $item["total_allowance"] += $val["allowance"];
+    // }
+    // foreach($item["scholar"] as $val) {
+    //   $item["total_allowance"] += $val["allowance"];
+    // }
+
+    $item["total_allowance"] += count($item["cripple"]) > 0? 800: 0;
+    $item["total_allowance"] += count($item["disavantaged"]) > 0? 800: 0;
+    // $item["total_allowance"] += count($item["scholar"]);
   }
 
 }

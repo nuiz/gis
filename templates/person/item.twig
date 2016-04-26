@@ -15,12 +15,16 @@
   <h3>ข้อมูลประชากร</h3>
   <div class="item-detail">
     <div class="row">
+      <div class="col-md-6">เลขที่บัตรประชาชน</div>
+      <div class="col-md-6">{{ item.card_id }}</div>
+    </div>
+    <div class="row">
       <div class="col-md-6">ชื่อ - นามสกุล</div>
       <div class="col-md-6">{{ item.first_name }} {{ item.last_name }}</div>
     </div>
     <div class="row">
       <div class="col-md-6">วันเกิด</div>
-      <div class="col-md-6">{{ item.birthdate }}</div>
+      <div class="col-md-6">{{ item.birthdate==null? '-': item.birthdate|date("d/m/Y") }}</div>
     </div>
     <div class="row">
       <div class="col-md-6">ที่อยู่</div>
@@ -55,7 +59,6 @@
       <div class="col-md-6">
         {% if item.cripple|length ==0 %}-{% endif %}
         {% for cripple in item.cripple %}
-        <div>{{ cripple.name ~'('~ cripple.allowance ~' บาท)' }}</div>
         {% endfor %}
       </div>
     </div>
@@ -64,7 +67,6 @@
       <div class="col-md-6">
       {% if item.disavantaged|length ==0 %}-{% endif %}
       {% for disavantaged in item.disavantaged %}
-      <div>{{ disavantaged.name ~'('~ disavantaged.allowance ~' บาท)' }}</div>
       {% endfor %}
     </div>
     </div>
@@ -73,7 +75,6 @@
       <div class="col-md-6">
       {% if item.scholar|length ==0 %}-{% endif %}
       {% for scholar in item.scholar %}
-      <div>{{ scholar.name ~'('~ scholar.allowance ~' บาท)' }}</div>
       {% endfor %}
     </div>
     </div>
@@ -84,6 +85,10 @@
         </div>
         <div class="map"></div>
       </div>
+    </div>
+
+    <div>
+      <a class="btn btn-warning" href="{{ base_url() }}/person">กลับไปยังรายการ</a>
     </div>
   </div>
 </div>
@@ -105,6 +110,8 @@
     map: map,
     title: '{{ item.first_name }} {{ item.last_name }}'
   });
+
+  marker.setIcon("{{ base_url() }}/asset/images/marker/person-marker.png");
 })();
 </script>
 {% endblock %}
