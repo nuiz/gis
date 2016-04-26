@@ -8,10 +8,10 @@
     <div class="row">
       <div class="form-group col-md-3">
         <label>ผู้สูงอายุ</label><br>
-        <select class="form-control" name="cripple_id">
+        <select class="form-control" name="is_older">
           <option value="">--เลือกผู้สูงอายุ--</option>
-          <option value="0">ไม่ใช่ผู้สูงอายุ</option>
-          <option value="1">เฉพาะผู้สูงอายุ</option>
+          <option value="0" {% if form.is_older == '0' %}selected{% endif %}>ไม่ใช่ผู้สูงอายุ</option>
+          <option value="1" {% if form.is_older == '1' %}selected{% endif %}>เฉพาะผู้สูงอายุ</option>
         </select>
       </div>
       <div class="form-group col-md-3">

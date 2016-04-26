@@ -32,7 +32,7 @@ class PersonController extends BaseController
 
     $queryParams = $req->getQueryParams();
     $where = [];
-    if(!empty($queryParams["is_older"])) {
+    if(@$queryParams["is_older"] == "0" || @$queryParams["is_older"] == "1") {
       $where["is_older"] = $queryParams["is_older"];
     }
     if(!empty($queryParams["cripple_id"])) {

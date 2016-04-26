@@ -6,13 +6,13 @@
 
   <table class="table table-bordered">
     <tr>
-      <th class="text-center">id</th>
+      <!-- <th class="text-center">id</th> -->
       <th class="text-center">ชื่อ</th>
       <th></th>
     </tr>
     {% for item in items %}
     <tr>
-      <td class="text-center">{{ item.id }}</td>
+      <!-- <td class="text-center">{{ item.id }}</td> -->
       <td><a href="{{ base_url() }}/cripple_type/{{ item.id }}">{{ item.name }}</a></td>
       <td>
         <a href="{{ base_url() }}/cripple_type/edit/{{ item.id }}"><i class="glyphicon glyphicon-pencil"></i></a>
