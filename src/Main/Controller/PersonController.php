@@ -308,7 +308,7 @@ class PersonController extends BaseController
     // }
 
     $item["total_allowance"] += count($item["cripple"]) > 0? 800: 0;
-    $item["total_allowance"] += count($item["disavantaged"]) > 0? 800: 0;
+    $item["total_allowance"] += count($item["disavantaged"]) > 0? 500: 0;
     // $item["total_allowance"] += count($item["scholar"]);
   }
 
