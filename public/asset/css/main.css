@@ -9,3 +9,8 @@
 .input-group.date .glyphicon.glyphicon-remove {
   color: rgb(237, 71, 71);
 }
+
+.btn-add {
+  position: absolute;
+  right: 20px;
+}

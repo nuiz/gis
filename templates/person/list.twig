@@ -2,7 +2,7 @@
 
 {% block body %}
 <div class="container-fluid">
-  <h3>ข้อมูลประชากร <a href="{{ base_url() }}/person/add"><i class="glyphicon glyphicon-plus-sign"></i></a></h3>
+  <h3>สวัสดิการชุมชน <a class="btn btn-success btn-add" href="{{ base_url() }}/person/add">เพิ่มสวัสดิการชุมชน</a></h3>
   <hr>
   <form>
     <div class="row">
@@ -54,7 +54,7 @@
   <hr>
   <table class="table table-bordered">
     <tr>
-      <th class="text-center">id</th>
+      <!-- <th class="text-center">id</th> -->
       <th class="text-center">เลขที่บัตรประชาชน</th>
       <th class="text-center">ชื่อ</th>
       <th class="text-center">อายุ</th>
@@ -69,7 +69,7 @@
     </tr>
     {% for item in items %}
     <tr>
-      <td class="text-center">{{ item.id }}</td>
+      <!-- <td class="text-center">{{ item.id }}</td> -->
       <td class="text-center">{{ item.card_id }}</td>
       <td><a href="{{ base_url() }}/person/{{ item.id }}">{{ item.first_name }} {{ item.last_name }}</a></td>
       <td>{{ item.age }}</td>

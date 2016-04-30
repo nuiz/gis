@@ -2,17 +2,17 @@
 
 {% block body %}
 <div class="container-fluid">
-  <h3>ศูนย์การเรียนรู้ <a href="{{ base_url() }}/learningcenter/add"><i class="glyphicon glyphicon-plus-sign"></i></a></h3>
-
+  <h3>ศูนย์การเรียนรู้ <a class="btn btn-success btn-add" href="{{ base_url() }}/learningcenter/add">เพิ่มศูนย์การเรียนรู้</a></h3>
+  <hr>
   <table class="table table-bordered">
     <tr>
-      <th class="text-center">id</th>
+      <!-- <th class="text-center">id</th> -->
       <th class="text-center">ชื่อ</th>
       <th></th>
     </tr>
     {% for item in items %}
     <tr>
-      <td class="text-center">{{ item.id }}</td>
+      <!-- <td class="text-center">{{ item.id }}</td> -->
       <td><a href="{{ base_url() }}/learningcenter/{{ item.id }}">{{ item.name }}</a></td>
       <td>
         <a href="{{ base_url() }}/learningcenter/edit/{{ item.id }}"><i class="glyphicon glyphicon-pencil"></i></a>

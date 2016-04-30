@@ -12,7 +12,7 @@
 }
 </style>
 <div class="container">
-  <h3>ข้อมูลประชากร</h3>
+  <h3>สวัสดิการชุมชน</h3>
   <div class="item-detail">
     <div class="row">
       <div class="col-md-6">เลขที่บัตรประชาชน</div>
@@ -24,7 +24,7 @@
     </div>
     <div class="row">
       <div class="col-md-6">วันเกิด</div>
-      <div class="col-md-6">{{ item.birthdate==null? '-': item.birthdate|date("d/m/Y") }}</div>
+      <div class="col-md-6">{{ item.birthdate|date("d/m/Y") }}</div>
     </div>
     <div class="row">
       <div class="col-md-6">ที่อยู่</div>
@@ -59,6 +59,7 @@
       <div class="col-md-6">
         {% if item.cripple|length ==0 %}-{% endif %}
         {% for cripple in item.cripple %}
+        <div>{{ cripple.name }}</div>
         {% endfor %}
       </div>
     </div>
@@ -67,6 +68,7 @@
       <div class="col-md-6">
       {% if item.disavantaged|length ==0 %}-{% endif %}
       {% for disavantaged in item.disavantaged %}
+      <div>{{ disavantaged.name }}</div>
       {% endfor %}
     </div>
     </div>
@@ -75,6 +77,7 @@
       <div class="col-md-6">
       {% if item.scholar|length ==0 %}-{% endif %}
       {% for scholar in item.scholar %}
+      <div>{{ scholar.name }}</div>
       {% endfor %}
     </div>
     </div>
