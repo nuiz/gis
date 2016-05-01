@@ -51,7 +51,6 @@ class PersonController extends BaseController
       $where["OR"]["card_id[~]"] = "%".$queryParams["keyword"]."%";
     }
     if(count($where) > 0) $where = ["AND"=> $where];
-    $where["GROUP"] = "person.id";
 
     $join = [
       "[>]person_cripple"=> ["id"=> "person_id"],
@@ -68,7 +67,26 @@ class PersonController extends BaseController
       "person.birth_date",
       "person.is_older"
     ];
+
+    $total = $db->count("person", $join, "person.id", $where);
+
+    // count
+    // item per page
+    $perPage = 50;
+    $maxPage = ceil($total/$perPage);
+
+		$page = @$queryParams['page']? $queryParams['page']: 1;
+		$start = ($page-1) * $perPage;
+
+    $where["LIMIT"] = [$start, $perPage];
+    // end count
+
+
+    $where["GROUP"] = "person.id";
+    $where["ORDER"] = "person.card_id";
+
     $items = $db->select("person", $join, $column, $where);
+
     $this->buildItems($items);
 
     // var_dump($items[0]); exit();
@@ -79,7 +97,9 @@ class PersonController extends BaseController
       "olders"=> $olders,
       "cripples"=> $cripples,
       "disavantageds"=> $disavantageds,
-      "scholars"=> $scholars
+      "scholars"=> $scholars,
+      "page"=> $page,
+      "maxPage"=> $maxPage
     ]);
 	}
 

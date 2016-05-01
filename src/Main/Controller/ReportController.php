@@ -125,17 +125,17 @@ class ReportController extends BaseController
       $bTime = @strtotime($item["birth_date"]);
       $bYear = @date('Y', $bTime) + 543;
       $bStr = @date('d/m/', $bTime).$bYear;
-      $bStr = $bStr?: "";
+      $bStr = !empty($item["birth_date"])? $bStr: "";
 
       $dTime = @strtotime($item["die_date"]);
       $dYear = @date('Y', $dTime) + 543;
       $dStr = @date('d/m/', $dTime).$dYear;
-      $dStr = $dStr?: "";
+      $dStr = !empty($item["die_date"])? $dStr: "";
 
-      $rTime = @strtotime($item["die_date"]);
+      $rTime = @strtotime($item["reg_date"]);
       $rYear = @date('Y', $rTime) + 543;
       $rStr = @date('d/m/', $rTime).$rYear;
-      $rStr = $rStr?: "";
+      $rStr = !empty($item["reg_date"])? $rStr: "";
 
       $sheet->SetCellValue('A'.$i, $item["card_id"]);
       $sheet->SetCellValue('B'.$i, $item["first_name"]);

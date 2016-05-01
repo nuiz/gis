@@ -99,5 +99,25 @@
     </tr>
     {% endfor %}
   </table>
+
+  <ul class="pagination">
+    {% if page > 1 %}
+    <li>
+      <a href="{{ base_url() }}/person?{{ form|merge({ 'page': page-1 })|url_encode }}" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    {% endif %}
+    {% for i in range(1, maxPage) %}
+    <li><a href="{{ base_url() }}/person?{{ form|merge({ 'page': i })|url_encode }}">{{ i }}</a></li>
+    {% endfor %}
+    {% if maxPage > page %}
+    <li>
+      <a href="{{ base_url() }}/person?{{ form|merge({ 'page': page+1 })|url_encode }}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+    {% endif %}
+  </ul>
 </div>
 {% endblock %}
