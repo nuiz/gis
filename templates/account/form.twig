@@ -2,7 +2,7 @@
 
 {% block body %}
 <div class="container">
-  <h3>สวัสดิการชุมชน</h3>
+  <h3>ผู้ใช้งาน</h3>
   {% if error_message %}
   <div class="alert alert-danger" role="alert">{{ error_message }}</div>
   {% endif %}
@@ -23,7 +23,7 @@
       <label>ระดับผู้ใช้งาน</label>
       <select class="form-control" name="level">
         <option value="staff" {% if form.level == "staff" %}selected{% endif %}>เจ้าหน้าที่</option>
-        <option value="user" {% if form.level == "user" %}selected{% endif %}>ผู้ใช้งาน</option>
+        <option value="user" {% if form.level == "user" %}selected{% endif %}>ผู้บริหาร</option>
       </select>
     </div>
     <div>
