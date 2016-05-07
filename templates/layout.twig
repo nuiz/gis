@@ -27,7 +27,7 @@
           <!-- {% if login.get("user").level in ['admin', 'staff', 'user'] %}<li><a href="{{ base_url() }}/map">แผนที่</a></li>{% endif %} -->
           {% if login.get("user").level in ['admin', 'staff', 'user'] %}<li><a href="{{ base_url() }}/report">รายงาน</a></li>{% endif %}
           {% if login.get("user").level in ['admin', 'staff'] %}<li><a href="{{ base_url() }}/person_type">ประเภทสวัสดิการ</a></li>{% endif %}
-          <!-- {% if login.get("user").level in ['admin', 'staff'] %}<li><a href="{{ base_url() }}/disavantaged_type">ประเภทผู้ด้อยโอกาศ</a></li>{% endif %} -->
+          <!-- {% if login.get("user").level in ['admin', 'staff'] %}<li><a href="{{ base_url() }}/disavantaged_type">ประเภทผู้ด้อยโอกาส</a></li>{% endif %} -->
           {% if login.get("user").level in ['admin'] %}<li><a href="{{ base_url() }}/account">ผู้ใช้งาน</a></li>{% endif %}
           <!-- <li><a href="{{ base_url() }}/scholar_type">ประเภทปราชญ์ชาวบ้าน</a></li> -->
         </ul>

@@ -24,9 +24,9 @@
         </select>
       </div>
       <div class="form-group col-md-3">
-        <label>ผู้ด้อยโอกาศ</label>
+        <label>ผู้ด้อยโอกาส</label>
         <select class="form-control" name="disa_id">
-          <option value="">--เลือกผู้ด้อยโอกาศ--</option>
+          <option value="">--เลือกผู้ด้อยโอกาส--</option>
           {% for disavantaged in disavantageds %}
           <option value="{{ disavantaged.id }}" {% if form.disa_id == disavantaged.id %}selected{% endif %}>{{ disavantaged.name }}</option>
           {% endfor %}
@@ -53,7 +53,7 @@
       <th class="text-center">ลงทะเบียนเมื่อ</th>
       <th class="text-center">ผู้สูงอายุ</th>
       <th class="text-center">ผู้พิการ</th>
-      <th class="text-center">ผู้ด้อยโอกาศ</th>
+      <th class="text-center">ผู้ด้อยโอกาส</th>
       <th class="text-center">เบี้ยยังชีพรวม</th>
       {% if login.get("user").level in ["admin", "staff"] %}
       <th></th>

@@ -72,7 +72,7 @@
       </select>
     </div>
     <div class="form-group">
-      <label>ผู้ด้อยโอกาศ</label>
+      <label>ผู้ด้อยโอกาส</label>
       <select class="form-control select2" name="disa_id[]" multiple>
         {% for disavantaged in disavantageds %}
         <option value="{{ disavantaged.id }}" {% if disavantaged.id in form.disa_id %}selected{% endif %}>{{ disavantaged.name }}</option>
