@@ -2,11 +2,15 @@
 
 {% block body %}
 <div class="container">
-  <h3>กลุ่มอาชีพ</h3>
+  <h3>ปราชญ์ชาวบ้าน</h3>
   <form method="post">
     <div class="form-group">
       <label>ชื่อ</label>
       <input type="text" class="form-control" name="name" value="{{ form.name }}" required>
+    </div>
+    <div class="form-group">
+      <label>ประเภทปราชญ์ชาวบ้าน</label>
+      <input type="text" class="form-control" name="scholar_type" value="{{ form.scholar_type }}" required>
     </div>
     <div class="form-group">
       <label>รายละเอียด</label>
@@ -34,7 +38,7 @@
     </div>
     <div>
       <button type="submit" class="btn btn-primary">บันทึก</button>
-      <a class="btn btn-warning" href="{{ base_url() }}/careergroup">กลับไปยังรายการ</a>
+      <a class="btn btn-warning" href="{{ base_url() }}/scholar">กลับไปยังรายการ</a>
     </div>
   </form>
 </div>

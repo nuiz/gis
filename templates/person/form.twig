@@ -2,7 +2,7 @@
 
 {% block body %}
 <div class="container">
-  <h3>สวัสดิการชุมชน</h3>
+  <h3>ข้อมูลรายบุคคล</h3>
   <form method="post">
     <div class="form-group">
       <label>เลขที่บัตรประชาชน</label>
@@ -79,14 +79,14 @@
         {% endfor %}
       </select>
     </div>
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label>ปราชญ์ชาวบ้าน</label>
       <select class="form-control select2" name="scho_id[]" multiple>
         {% for scholar in scholars %}
         <option value="{{ scholar.id }}" {% if scholar.id in form.scho_id %}selected{% endif %}>{{ scholar.name }}</option>
         {% endfor %}
       </select>
-    </div>
+    </div> -->
     <div>
       <button type="submit" class="btn btn-primary">บันทึก</button>
       <a class="btn btn-warning" href="{{ base_url() }}/person">กลับไปยังรายการ</a>

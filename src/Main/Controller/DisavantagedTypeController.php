@@ -83,7 +83,7 @@ class DisavantagedTypeController extends BaseController
     $postBody = $req->getParsedBody();
     $editParams = $this->adapterParams($postBody);
 
-    if($db->update("disavantaged_type", $editParams, ["id"=> $attr["id"]])) {
+    if($db->update("disavantaged_type", $editParams, ["id"=> $attr["id"]]) !== false) {
       return $res->withHeader("Location", $req->getUri()->getBasePath()."/disavantaged_type");
     }
 

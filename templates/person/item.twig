@@ -12,7 +12,7 @@
 }
 </style>
 <div class="container">
-  <h3>สวัสดิการชุมชน</h3>
+  <h3>ข้อมูลรายบุคคล</h3>
   <div class="item-detail">
     <div class="row">
       <div class="col-md-6">เลขที่บัตรประชาชน</div>
@@ -66,21 +66,21 @@
     <div class="row">
       <div class="col-md-6">ผู้ด้อยโอกาศ</div>
       <div class="col-md-6">
-      {% if item.disavantaged|length ==0 %}-{% endif %}
-      {% for disavantaged in item.disavantaged %}
-      <div>{{ disavantaged.name }}</div>
-      {% endfor %}
+        {% if item.disavantaged|length ==0 %}-{% endif %}
+        {% for disavantaged in item.disavantaged %}
+        <div>{{ disavantaged.name }}</div>
+        {% endfor %}
+      </div>
     </div>
-    </div>
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-md-6">ปราชญ์ชาวบ้าน</div>
       <div class="col-md-6">
-      {% if item.scholar|length ==0 %}-{% endif %}
-      {% for scholar in item.scholar %}
-      <div>{{ scholar.name }}</div>
-      {% endfor %}
-    </div>
-    </div>
+        {% if item.scholar|length ==0 %}-{% endif %}
+        {% for scholar in item.scholar %}
+        <div>{{ scholar.name }}</div>
+        {% endfor %}
+      </div>
+    </div> -->
     <div class="row">
       <div class="col-md-12">
         <div class="text-center">

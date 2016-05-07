@@ -103,6 +103,101 @@ class PersonController extends BaseController
     ]);
 	}
 
+  public function personsSearch(Request $req, Response $res)
+  {
+    $container = $this->slim->getContainer();
+    $db = $container->medoo;
+    // $session = $container->session;
+    // $segment = $session->getSegment("login");
+    // $segment->set("username", "papangping");
+    // $session->commit();
+
+    $oldersService = XMLService::getInstance("olders");
+    $cripplesService = new CrippleService($db);
+    $disavantagedsService = new DisavantagedService($db);
+    $scholarsService = new ScholarService($db);
+
+    $olders = $oldersService->gets();
+    $cripples = $cripplesService->gets();
+    $disavantageds = $disavantagedsService->gets();
+    $scholars = $scholarsService->gets();
+
+    $queryParams = $req->getQueryParams();
+    $where = [];
+    if(@$queryParams["is_older"] == "0" || @$queryParams["is_older"] == "1") {
+      $where["is_older"] = $queryParams["is_older"];
+    }
+    if(!empty($queryParams["cripple_id"])) {
+      $where["person_cripple.cripple_id"] = $queryParams["cripple_id"];
+    }
+    if(!empty($queryParams["disa_id"])) {
+      $where["person_disavantaged.disavantaged_id"] = $queryParams["disa_id"];
+    }
+    if(!empty($queryParams["scho_id"])) {
+      $where[".person_scholar.scholar_id"] = $queryParams["scho_id"];
+    }
+    if(!empty($queryParams["keyword"])) {
+      $where["OR"] = [];
+      $where["OR"]["first_name[~]"] = "%".$queryParams["keyword"]."%";
+      $where["OR"]["last_name[~]"] = "%".$queryParams["keyword"]."%";
+      $where["OR"]["card_id[~]"] = "%".$queryParams["keyword"]."%";
+    }
+    if(count($where) > 0) $where = ["AND"=> $where];
+
+    $join = [
+      "[>]person_cripple"=> ["id"=> "person_id"],
+      "[>]person_disavantaged"=> ["id"=> "person_id"],
+      "[>]person_scholar"=> ["id"=> "person_id"]
+    ];
+    $column = [
+      "person.id",
+      "person.card_id",
+      "person.first_name",
+      "person.last_name",
+      "person.reg_date",
+      "person.die_date",
+      "person.birth_date",
+      "person.is_older"
+    ];
+
+    $total = $db->count("person", $join, "person.id", $where);
+
+    // count
+    // item per page
+    $perPage = 50;
+    $maxPage = ceil($total/$perPage);
+
+		$page = @$queryParams['page']? $queryParams['page']: 1;
+		$start = ($page-1) * $perPage;
+
+    $where["LIMIT"] = [$start, $perPage];
+    // end count
+
+
+    $where["GROUP"] = "person.id";
+    $where["ORDER"] = "person.card_id";
+
+    $items = $db->select("person", $join, $column, $where);
+
+    $this->buildItems($items);
+
+    // hardcode for empty page
+    if(count($where) <= 3) {
+      $items = [];
+    }
+
+    return $container->view->render($res, "person/list_search.twig", [
+      "form"=> $queryParams,
+      "items"=> $items,
+      "olders"=> $olders,
+      "cripples"=> $cripples,
+      "disavantageds"=> $disavantageds,
+      "scholars"=> $scholars,
+      "page"=> $page,
+      "maxPage"=> $maxPage
+    ]);
+	}
+
   public function person(Request $req, Response $res, $attr = [])
   {
     $container = $this->slim->getContainer();
@@ -213,7 +308,7 @@ class PersonController extends BaseController
 
     // var_dump($editParams); exit();
 
-    if($db->update("person", $editParams["person"], ["id"=> $attr["id"]]) && $this->saveType($attr["id"], $editParams)) {
+    if($db->update("person", $editParams["person"], ["id"=> $attr["id"]]) !== false && $this->saveType($attr["id"], $editParams)) {
       return $res->withHeader("Location", $req->getUri()->getBasePath()."/person");
     }
 

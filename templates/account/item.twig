@@ -1,0 +1,61 @@
+{% extends "layout.twig" %}
+
+{% block body %}
+<style media="screen">
+.item-detail .row {
+  border-bottom: 1px solid rgb(158, 158, 158);
+}
+.map {
+  border: 3px solid rgb(158, 158, 158);
+  height: 500px;
+  margin-bottom: 20px;
+}
+</style>
+<div class="container">
+  <h3>สวัสดิการชุมชน</h3>
+  <div class="item-detail">
+    <div class="row">
+      <div class="col-md-6">ชื่อ</div>
+      <div class="col-md-6">{{ item.name }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">ชื่อเข้าใช้งาน</div>
+      <div class="col-md-6">{{ item.username }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">รหัสผ่าน</div>
+      <div class="col-md-6">{{ item.password }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">ระดับผู้ใช้งาน</div>
+      <div class="col-md-6">{{ item.level }}</div>
+    </div>
+
+    <div>
+      <a class="btn btn-warning" href="{{ base_url() }}/person">กลับไปยังรายการ</a>
+    </div>
+  </div>
+</div>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLDfQWtqjiEFfVNPa4wGnIEclpx8dcSrU&language=th"></script>
+<script type="text/javascript">
+(function(){
+  "use strict";
+  // {lat: 15.231497, lng: 100.213483}
+
+  var latLng = {lat: {{ item.location_lat }}, lng: {{ item.location_lng }}};
+  var mapEl = document.getElementsByClassName("map")[0];
+  var map = new google.maps.Map(mapEl, {
+    center: latLng,
+    zoom: 10
+  });
+
+  var marker = new google.maps.Marker({
+    position: latLng,
+    map: map,
+    title: '{{ item.first_name }} {{ item.last_name }}'
+  });
+
+  marker.setIcon("{{ base_url() }}/asset/images/marker/person-marker.png");
+})();
+</script>
+{% endblock %}

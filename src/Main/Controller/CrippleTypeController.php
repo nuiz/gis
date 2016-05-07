@@ -83,7 +83,7 @@ class CrippleTypeController extends BaseController
     $postBody = $req->getParsedBody();
     $editParams = $this->adapterParams($postBody);
 
-    if($db->update("cripple_type", $editParams, ["id"=> $attr["id"]])) {
+    if($db->update("cripple_type", $editParams, ["id"=> $attr["id"]]) !== false) {
       return $res->withHeader("Location", $req->getUri()->getBasePath()."/cripple_type");
     }
 

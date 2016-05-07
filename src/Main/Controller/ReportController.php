@@ -154,4 +154,123 @@ class ReportController extends BaseController
     return PHPExcel_IOFactory::createWriter($excel, 'Excel5');
     // $objWriter->save('test.xls');
   }
+
+  public function older(Request $req, Response $res)
+  {
+    $container = $this->slim->getContainer();
+    $db = $container->medoo;
+
+    $oldersService = XMLService::getInstance("olders");
+    $olders = $oldersService->gets();
+
+    foreach($olders as &$older) {
+      $dateMin = new \DateTime('now');
+      $dateMax = new \DateTime('now');
+
+      $where = [];
+
+      $dateMin->sub(new \DateInterval('P'.$older["min"].'Y'));
+      $where["birth_date[<=]"] = $dateMin->format("Y-m-d");
+
+      if($older["min"] < 90) {
+        $dateMax->sub(new \DateInterval('P'.($older["max"] + 1).'Y'));
+        $where["birth_date[>]"] = $dateMax->format("Y-m-d");
+      }
+
+      $where = ["AND"=> $where];
+      $older["count"] = $db->count("person", ["AND"=> $where]);
+    }
+
+    return $container->view->render($res, "report/older.twig", ["olders"=> $olders]);
+  }
+
+  public function cripple(Request $req, Response $res)
+  {
+    $container = $this->slim->getContainer();
+    $db = $container->medoo;
+
+    $items = $db->select("cripple_type", "*");
+
+    foreach($items as &$item) {
+      $where = [];
+      $where["cripple_id"] = $item["id"];
+      $where = ["AND"=> $where];
+      $item["count"] = $db->count("person_cripple", ["AND"=> $where]);
+    }
+
+    return $container->view->render($res, "report/cripple.twig", ["items"=> $items]);
+  }
+
+  //disavantaged
+
+  public function disavantaged(Request $req, Response $res)
+  {
+    $container = $this->slim->getContainer();
+    $db = $container->medoo;
+
+    $items = $db->select("disavantaged_type", "*");
+
+    foreach($items as &$item) {
+      $where = [];
+      $where["disavantaged_id"] = $item["id"];
+      $where = ["AND"=> $where];
+      $item["count"] = $db->count("person_disavantaged", ["AND"=> $where]);
+    }
+
+    return $container->view->render($res, "report/disavantaged.twig", ["items"=> $items]);
+  }
+
+  public function register(Request $req, Response $res)
+  {
+    $container = $this->slim->getContainer();
+    $db = $container->medoo;
+
+    $items = [];
+    $persons = $db->query("SELECT reg_date FROM person GROUP BY YEAR(reg_date)");
+
+    foreach($persons as $person) {
+      if(empty($person["reg_date"]) || $person["reg_date"] == "0000-00-00") continue;
+      $year = explode("-", $person["reg_date"]);
+      $year = $year[0];
+      $date_start = $year."-01-01";
+      $date_end = $year."-12-31";
+      $item = [];
+      $item["name"] = "ปี พ.ศ. ".($year + 543);
+      $cripple = $db->select("person_cripple", "person_id", ["GROUP"=> "person_id"]);
+      $disavantaged = $db->select("person_disavantaged", "person_id", ["GROUP"=> "person_id"]);
+      $item["count_older"] = $db->count("person", ["AND"=> ["reg_date[>=]"=> $date_start, "reg_date[<]"=> $date_end, "is_older"=> 1]]);
+      $item["count_cripple"] = $db->count("person", ["AND"=> ["reg_date[>=]"=> $date_start, "reg_date[<]"=> $date_end, "id"=> $cripple]]);
+      $item["count_disavantaged"] = $db->count("person", ["AND"=> ["reg_date[>=]"=> $date_start, "reg_date[<]"=> $date_end, "id"=> $disavantaged]]);
+      $items[] = $item;
+    }
+
+    return $container->view->render($res, "report/register.twig", ["items"=> $items]);
+  }
+
+  public function dies(Request $req, Response $res)
+  {
+    $container = $this->slim->getContainer();
+    $db = $container->medoo;
+
+    $items = [];
+    $persons = $db->query("SELECT die_date FROM person GROUP BY YEAR(die_date)");
+
+    foreach($persons as $person) {
+      if(empty($person["die_date"]) || $person["die_date"] == "0000-00-00") continue;
+      $year = explode("-", $person["die_date"]);
+      $year = $year[0];
+      $date_start = $year."-01-01";
+      $date_end = $year."-12-31";
+      $item = [];
+      $item["name"] = "ปี พ.ศ. ".($year + 543);
+      $cripple = $db->select("person_cripple", "person_id", ["GROUP"=> "person_id"]);
+      $disavantaged = $db->select("person_disavantaged", "person_id", ["GROUP"=> "person_id"]);
+      $item["count_older"] = $db->count("person", ["AND"=> ["die_date[>=]"=> $date_start, "die_date[<]"=> $date_end, "is_older"=> 1]]);
+      $item["count_cripple"] = $db->count("person", ["AND"=> ["die_date[>=]"=> $date_start, "die_date[<]"=> $date_end, "id"=> $cripple]]);
+      $item["count_disavantaged"] = $db->count("person", ["AND"=> ["die_date[>=]"=> $date_start, "die_date[<]"=> $date_end, "id"=> $disavantaged]]);
+      $items[] = $item;
+    }
+
+    return $container->view->render($res, "report/die.twig", ["items"=> $items]);
+  }
 }

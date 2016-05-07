@@ -17,11 +17,11 @@
 }
 </style>
 <div class="container">
-  <h3 class="text-center">แผนที่</h3>
+  <h3 class="text-center">แผนที่แสดงข้อมูลโดยรวม</h3>
   <div class="text-center">
     <img src="{{ base_url() }}/asset/images/marker/person-marker.png"> ประชากร,
     <img src="{{ base_url() }}/asset/images/marker/group-marker.png"> กลุ่มอาชีพ,
-    <img src="{{ base_url() }}/asset/images/marker/lc-marker.png"> ศูนย์การเรียนรู้
+    <img src="{{ base_url() }}/asset/images/marker/lc-marker.png"> ปราชญ์ชาวบ้าน
   </div>
   <hr>
   <div class="map"></div>
@@ -52,7 +52,7 @@
 
   var persons = {{ persons|json_encode|raw }};
   var careergroups = {{ careergroups|json_encode|raw }};
-  var learningcenters = {{ learningcenters|json_encode|raw }};
+  var scholars = {{ scholars|json_encode|raw }};
 
   persons.forEach(function(item){
     makeMarker(item, "person", "{{ base_url() }}/asset/images/marker/person-marker.png");
@@ -60,13 +60,13 @@
   careergroups.forEach(function(item){
     makeMarker(item, "careergroup", "{{ base_url() }}/asset/images/marker/group-marker.png");
   });
-  learningcenters.forEach(function(item){
-    makeMarker(item, "learningcenter", "{{ base_url() }}/asset/images/marker/lc-marker.png");
+  scholars.forEach(function(item){
+    makeMarker(item, "scholar", "{{ base_url() }}/asset/images/marker/lc-marker.png");
   });
 
   function makeMarker(item, type, icon) {
     var position = {lat: parseFloat(item.location_lat), lng: parseFloat(item.location_lng)};
-    var title = type=="person"? "ประชากร": (type=="careergroup"? "กลุ่มอาชีพ": "ศูนย์การเรียนรู้");
+    var title = type=="person"? "ประชากร": (type=="careergroup"? "กลุ่มอาชีพ": "ปราชญ์ชาวบ้าน");
     var desc = type=="person"? item.first_name + ' ' + item.last_name : item.name;
 
     var marker = new google.maps.Marker({

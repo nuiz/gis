@@ -26,19 +26,20 @@ class IndexController extends BaseController
     $session = $container->session;
     $loginSegment = $session->getSegment("login");
 
-    if(@$reqBody["username"] != $container->config["login"]["username"]) {
+    $db = $container->medoo;
+    $acc = $db->get("account", "*", ["username"=> @$reqBody["username"]]);
+
+    if(!$acc) {
       $loginSegment->clear();
-      return $container->view->render($res, "login.twig", ["error_message"=> "Invalid Username"]);
+      return $container->view->render($res, "login.twig", ["error_message"=> "Not found ".@$reqBody["username"]]);
     }
 
-    if(@$reqBody["password"] != $container->config["login"]["password"]) {
+    if(@$reqBody["password"] != $acc["password"]) {
       $loginSegment->clear();
       return $container->view->render($res, "login.twig", ["error_message"=> "Invalid Password"]);
     }
 
-    $loginSegment->set("user", [
-      "username"=> "admin"
-    ]);
+    $loginSegment->set("user", $acc);
     $session->commit();
 
     return $res->withHeader("Location", $req->getUri()->getBasePath()."/person");

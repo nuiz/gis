@@ -1,0 +1,60 @@
+{% extends "layout.twig" %}
+
+{% block body %}
+<h3 class="text-center">รายงานผู้เสียชีวิต</h3> 
+<div class="container">
+  <canvas id="myChart" width="" height=""></canvas>
+<div>
+<script type="text/javascript" src="{{ base_url() }}/asset/js/Chart.js"></script>
+<script type="text/javascript">
+  // Any of the following formats may be used
+  var items = {{ items|json_encode|raw }};
+  var data_1 = [];
+  var data_2 = [];
+  var data_3 = [];
+  var label = [];
+  $.each(items, function(i, o){
+    label.push(o.name);
+    data_1.push(o.count_older);
+    data_2.push(o.count_cripple);
+    data_3.push(o.count_disavantaged);
+  });
+  var ctx = document.getElementById("myChart");
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: label,
+        datasets: [{
+            label: 'ผู้สูงอายุ',
+            data: data_1,
+            backgroundColor: "rgba(2,99,132,0.6)"
+        },
+        {
+            label: 'ผู้พิการ',
+            data: data_2,
+            backgroundColor: "rgba(100,99,132,0.6)"
+        },
+        {
+            label: 'ผู้ด้อยโอกาศ',
+            data: data_3,
+            backgroundColor: "rgba(200,99,132,0.6)"
+        }]
+        // ,{
+        //     label: '# of Votes 2',
+        //     data: [12, 19, 3, 5, 2, 3],
+        //     backgroundColor: "rgba(255,99,132,0.6)"
+        // }]
+    }
+    // ,
+    // options: {
+    //     scales: {
+    //         yAxes: [{
+    //             ticks: {
+    //                 beginAtZero:true
+    //             }
+    //         }]
+    //     }
+    // }
+});
+</script>
+{% endblock %}

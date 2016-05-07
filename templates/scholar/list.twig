@@ -2,7 +2,7 @@
 
 {% block body %}
 <div class="container-fluid">
-  <h3>กลุ่มอาชีพ <a class="btn btn-success btn-add" href="{{ base_url() }}/careergroup/add">เพิ่มกลุ่มอาชีพ</a></h3>
+  <h3>ปราชญ์ชาวบ้าน <a class="btn btn-success btn-add" href="{{ base_url() }}/scholar/add">เพิ่มกลุ่มอาชีพ</a></h3>
   <hr>
 
   <table class="table table-bordered">
@@ -19,16 +19,16 @@
     {% for item in items %}
     <tr>
       <!-- <td class="text-center">{{ item.id }}</td> -->
-      <td><a href="{{ base_url() }}/careergroup/{{ item.id }}">{{ item.name }}</a></td>
+      <td><a href="{{ base_url() }}/scholar/{{ item.id }}">{{ item.name }}</a></td>
       <td class="text-center">{{ item.contact_firstname }}</td>
       <td class="text-center">{{ item.contact_lastname }}</td>
       <td class="text-center">{{ item.contact_phone }}</td>
       {% if login.get("user").level in ["admin", "staff"] %}
       <td>
-        <a href="{{ base_url() }}/careergroup/edit/{{ item.id }}"><i class="glyphicon glyphicon-pencil"></i></a>
-        <a class="remove-btn" href="{{ base_url() }}/careergroup/remove/{{ item.id }}"><i class="glyphicon glyphicon-remove"></i></a>
+        <a href="{{ base_url() }}/scholar/edit/{{ item.id }}"><i class="glyphicon glyphicon-pencil"></i></a>
+        <a class="remove-btn" href="{{ base_url() }}/scholar/remove/{{ item.id }}"><i class="glyphicon glyphicon-remove"></i></a>
       </td>
-    {% endif %}
+      {% endif %}
     </tr>
     {% endfor %}
   </table>

@@ -15,12 +15,12 @@ class MapController extends BaseController
 
     $persons = $db->select("person", "*");
     $careergroups = $db->select("careergroup", "*");
-    $learningcenters = $db->select("learningcenter", "*");
+    $scholars = $db->select("scholar", "*");
 
     return $container->view->render($res, "map/list.twig", [
       "persons"=> $persons,
       "careergroups"=> $careergroups,
-      "learningcenters"=> $learningcenters
+      "scholars"=> $scholars
     ]);
 	}
 }

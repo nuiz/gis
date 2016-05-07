@@ -18,6 +18,6 @@
   <olders>
     <min>90</min>
     <max>999</max>
-    <allowance>900</allowance>
+    <allowance>1000</allowance>
   </olders>
 </root>

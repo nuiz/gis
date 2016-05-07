@@ -12,11 +12,15 @@
 }
 </style>
 <div class="container">
-  <h3>กลุ่มอาชีพ</h3>
+  <h3>ปราชญ์ชาวบ้าน</h3>
   <div class="item-detail">
     <div class="row">
       <div class="col-md-6">ชื่อ</div>
       <div class="col-md-6">{{ item.name }}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">ประเภทปราชญ์ชาวบ้าน</div>
+      <div class="col-md-6">{{ item.scholar_type }}</div>
     </div>
     <div class="row">
       <div class="col-md-6">รายละเอียด</div>
@@ -43,7 +47,7 @@
       </div>
     </div>
     <div>
-      <a class="btn btn-warning" href="{{ base_url() }}/careergroup">กลับไปยังรายการ</a>
+      <a class="btn btn-warning" href="{{ base_url() }}/scholar">กลับไปยังรายการ</a>
     </div>
   </div>
 </div>
@@ -66,7 +70,7 @@
     title: '{{ item.first_name }} {{ item.last_name }}'
   });
 
-  marker.setIcon("{{ base_url() }}/asset/images/marker/group-marker.png");
+  marker.setIcon("{{ base_url() }}/asset/images/marker/lc-marker.png");
 })();
 </script>
 {% endblock %}

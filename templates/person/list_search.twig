@@ -2,9 +2,9 @@
 
 {% block body %}
 <div class="container-fluid">
-  <h3>ข้อมูลรายบุคคล <a class="btn btn-success btn-add" href="{{ base_url() }}/person/add">เพิ่มข้อมูลรายบุคคล</a></h3>
-  <hr class="hidden">
-  <form class="hidden">
+  <h3>ค้นหาข้อมูลรายบุคคล</h3>
+  <hr>
+  <form style="max-width: 100%;">
     <div class="row">
       <div class="form-group col-md-3">
         <label>ผู้สูงอายุ</label><br>
@@ -42,8 +42,8 @@
       </div>
     </div>
   </form>
-  <hr>
-  <table class="table table-bordered">
+  <hr {% if items|length == 0 %} class="hidden"{% endif %}>
+  <table class="table table-bordered {% if items|length == 0 %}hidden{% endif %}">
     <tr>
       <!-- <th class="text-center">id</th> -->
       <th class="text-center">เลขที่บัตรประชาชน</th>
@@ -89,7 +89,7 @@
     {% endfor %}
   </table>
 
-  <ul class="pagination">
+  <ul class="pagination {% if items|length == 0 %}hidden{% endif %}">
     {% if page > 1 %}
     <li>
       <a href="{{ base_url() }}/person?{{ form|merge({ 'page': page-1 })|url_encode }}" aria-label="Previous">

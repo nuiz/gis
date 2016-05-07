@@ -1,0 +1,42 @@
+{% extends "layout.twig" %}
+
+{% block body %}
+<div class="container">
+  <h3>สวัสดิการชุมชน</h3>
+  {% if error_message %}
+  <div class="alert alert-danger" role="alert">{{ error_message }}</div>
+  {% endif %}
+  <form method="post">
+    <div class="form-group">
+      <label>ชื่อ</label>
+      <input type="text" class="form-control" name="name" value="{{ form.name }}" required>
+    </div>
+    <div class="form-group">
+      <label>ชื่อเข้าใช้งาน</label>
+      <input type="text" class="form-control" name="username" value="{{ form.username }}" required>
+    </div>
+    <div class="form-group">
+      <label>รหัสผ่าน</label>
+      <input type="text" class="form-control" name="password" value="{{ form.password }}" required>
+    </div>
+    <div class="form-group">
+      <label>ระดับผู้ใช้งาน</label>
+      <select class="form-control" name="level">
+        <option value="staff" {% if form.level == "staff" %}selected{% endif %}>เจ้าหน้าที่</option>
+        <option value="user" {% if form.level == "user" %}selected{% endif %}>ผู้ใช้งาน</option>
+      </select>
+    </div>
+    <div>
+      <button type="submit" class="btn btn-primary">บันทึก</button>
+      <a class="btn btn-warning" href="{{ base_url() }}/account">กลับไปยังรายการ</a>
+    </div>
+  </form>
+</div>
+<script type="text/javascript" src="{{ base_url() }}/asset/select2/js/select2.min.js"></script>
+<script type="text/javascript" src="{{ base_url() }}/asset/select2/js/i18n/th.js"></script>
+<link rel="stylesheet" href="{{ base_url() }}/asset/select2/css/select2.min.css">
+<script type="text/javascript">
+$(function(){
+});
+</script>
+{% endblock %}

@@ -83,7 +83,7 @@ class CareergroupController extends BaseController
     $postBody = $req->getParsedBody();
     $editParams = $this->adapterParams($postBody);
 
-    if($db->update("careergroup", $editParams, ["id"=> $attr["id"]])) {
+    if($db->update("careergroup", $editParams, ["id"=> $attr["id"]]) !== false) {
       return $res->withHeader("Location", $req->getUri()->getBasePath()."/careergroup");
     }
 

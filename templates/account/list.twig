@@ -1,0 +1,50 @@
+{% extends "layout.twig" %}
+
+{% block body %}
+<div class="container-fluid">
+  <h3>ผู้ใช้งาน <a class="btn btn-success btn-add" href="{{ base_url() }}/account/add">เพิ่มผู้ใช้งาน</a></h3>
+  <hr>
+
+  <table class="table table-bordered">
+    <tr>
+      <!-- <th class="text-center">id</th> -->
+      <th class="text-center">ชื่อ</th>
+      <th class="text-center">ชื่อเข้าใช้งาน</th>
+      <th class="text-center">ระดับ</th>
+      <th></th>
+    </tr>
+    {% for item in items %}
+    <tr>
+      <!-- <td class="text-center">{{ item.id }}</td> -->
+      <td><a href="{{ base_url() }}/account/{{ item.id }}">{{ item.name }}</a></td>
+      <td>{{ item.username }}</td>
+      <td>{{ item.level == "staff" ? "เจ้าหน้าที่": "ผู้ใช้งาน" }}</td>
+      <td>
+        <a href="{{ base_url() }}/account/edit/{{ item.id }}"><i class="glyphicon glyphicon-pencil"></i></a>
+        <a class="remove-btn" href="{{ base_url() }}/account/remove/{{ item.id }}"><i class="glyphicon glyphicon-remove"></i></a>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  <ul class="pagination">
+    {% if page > 1 %}
+    <li>
+      <a href="{{ base_url() }}/account?{{ form|merge({ 'page': page-1 })|url_encode }}" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    {% endif %}
+    {% for i in range(1, maxPage) %}
+    <li><a href="{{ base_url() }}/account?{{ form|merge({ 'page': i })|url_encode }}">{{ i }}</a></li>
+    {% endfor %}
+    {% if maxPage > page %}
+    <li>
+      <a href="{{ base_url() }}/account?{{ form|merge({ 'page': page+1 })|url_encode }}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+    {% endif %}
+  </ul>
+</div>
+{% endblock %}

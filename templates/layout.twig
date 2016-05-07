@@ -19,15 +19,27 @@
     <div class="container-fluid">
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-          <li><a href="{{ base_url() }}/person">สวัสดิการชุมชน</a></li>
-          <li><a href="{{ base_url() }}/careergroup">กลุ่มอาชีพ</a></li>
-          <li><a href="{{ base_url() }}/learningcenter">ศูนย์การเรียนรู้</a></li>
-          <li><a href="{{ base_url() }}/map">แผนที่</a></li>
-          <li><a href="{{ base_url() }}/report">รายงาน</a></li>
-          <li><a href="{{ base_url() }}/cripple_type">ประเภทผู้พิการ</a></li>
-          <li><a href="{{ base_url() }}/disavantaged_type">ประเภทผู้ด้อยโอกาศ</a></li>
-          <li><a href="{{ base_url() }}/scholar_type">ประเภทปราชญ์ชาวบ้าน</a></li>
-          <li><a href="{{ base_url() }}/logout">ออกจากระบบ</a></li>
+          {% if login.get("user").level in ['admin', 'staff', 'user'] %}<li><a href="{{ base_url() }}/person">ข้อมูลรายบุคคล</a></li>{% endif %}
+          {% if login.get("user").level in ['admin', 'staff', 'user'] %}<li><a href="{{ base_url() }}/person_search">ค้นหาข้อมูลรายบุคคล</a></li>{% endif %}
+          {% if login.get("user").level in ['admin', 'staff', 'user'] %}<li><a href="{{ base_url() }}/careergroup">กลุ่มอาชีพ</a></li>{% endif %}
+          {% if login.get("user").level in ['admin', 'staff', 'user'] %}<li><a href="{{ base_url() }}/scholar">ปราชญ์ชาวบ้าน</a></li>{% endif %}
+          <!-- <li><a href="{{ base_url() }}/learningcenter">ศูนย์การเรียนรู้</a></li> -->
+          <!-- {% if login.get("user").level in ['admin', 'staff', 'user'] %}<li><a href="{{ base_url() }}/map">แผนที่</a></li>{% endif %} -->
+          {% if login.get("user").level in ['admin', 'staff', 'user'] %}<li><a href="{{ base_url() }}/report">รายงาน</a></li>{% endif %}
+          {% if login.get("user").level in ['admin', 'staff'] %}<li><a href="{{ base_url() }}/person_type">ประเภทสวัสดิการ</a></li>{% endif %}
+          <!-- {% if login.get("user").level in ['admin', 'staff'] %}<li><a href="{{ base_url() }}/disavantaged_type">ประเภทผู้ด้อยโอกาศ</a></li>{% endif %} -->
+          {% if login.get("user").level in ['admin'] %}<li><a href="{{ base_url() }}/account">ผู้ใช้งาน</a></li>{% endif %}
+          <!-- <li><a href="{{ base_url() }}/scholar_type">ประเภทปราชญ์ชาวบ้าน</a></li> -->
+        </ul>
+        <ul class="nav navbar-nav pull-right">
+          <li role="presentation" class="dropdown pull-right">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+              {{ login.get("user").name }} <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="{{ base_url() }}/logout">ออกจากระบบ</a></li>
+            </ul>
+          </li>
         </ul>
       </div>
     </div>
