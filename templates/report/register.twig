@@ -1,7 +1,7 @@
 {% extends "layout.twig" %}
 
 {% block body %}
-<h3 class="text-center">รายงานผู้ลงทะเบียน</h3> 
+<h3 class="text-center">รายงานผู้ลงทะเบียน</h3>
 <div class="container">
   <canvas id="myChart" width="" height=""></canvas>
 <div>
@@ -44,17 +44,16 @@
         //     data: [12, 19, 3, 5, 2, 3],
         //     backgroundColor: "rgba(255,99,132,0.6)"
         // }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
     }
-    // ,
-    // options: {
-    //     scales: {
-    //         yAxes: [{
-    //             ticks: {
-    //                 beginAtZero:true
-    //             }
-    //         }]
-    //     }
-    // }
 });
 </script>
 {% endblock %}
