@@ -17,7 +17,7 @@
   var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: ["60-69 ปี", "70-79 ปี", "80-89 ปี", "90 ปีขึ้นไป"],
+        labels: ["60-69", "70-79", "80-89", "90 ขึ้นไป"],
         datasets: [{
             label: 'ผู้สูงอายุ',
             data: data,
@@ -34,6 +34,16 @@
             yAxes: [{
                 ticks: {
                     beginAtZero:true
+                },
+                scaleLabel: {
+                  display: true,
+                  labelString: 'จำนวน (คน)'
+                }
+            }],
+            xAxes: [{
+                scaleLabel: {
+                  display: true,
+                  labelString: 'ช่วงอายุ (ปี)'
                 }
             }]
         }

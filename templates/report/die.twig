@@ -46,13 +46,23 @@
         // }]
     },
     options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
-        }
+      scales: {
+          yAxes: [{
+              ticks: {
+                  beginAtZero:true
+              },
+              scaleLabel: {
+                display: true,
+                labelString: 'จำนวน (คน)'
+              }
+          }],
+          xAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: 'ปี (พ.ศ.)'
+              }
+          }]
+      }
     }
 });
 </script>

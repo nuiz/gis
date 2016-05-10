@@ -235,7 +235,7 @@ class ReportController extends BaseController
       $date_start = $year."-01-01";
       $date_end = $year."-12-31";
       $item = [];
-      $item["name"] = "ปี พ.ศ. ".($year + 543);
+      $item["name"] = ($year + 543);
       $cripple = $db->select("person_cripple", "person_id", ["GROUP"=> "person_id"]);
       $disavantaged = $db->select("person_disavantaged", "person_id", ["GROUP"=> "person_id"]);
       $item["count_older"] = $db->count("person", ["AND"=> ["reg_date[>=]"=> $date_start, "reg_date[<]"=> $date_end, "is_older"=> 1]]);
@@ -262,7 +262,7 @@ class ReportController extends BaseController
       $date_start = $year."-01-01";
       $date_end = $year."-12-31";
       $item = [];
-      $item["name"] = "ปี พ.ศ. ".($year + 543);
+      $item["name"] = ($year + 543);
       $cripple = $db->select("person_cripple", "person_id", ["GROUP"=> "person_id"]);
       $disavantaged = $db->select("person_disavantaged", "person_id", ["GROUP"=> "person_id"]);
       $item["count_older"] = $db->count("person", ["AND"=> ["die_date[>=]"=> $date_start, "die_date[<]"=> $date_end, "is_older"=> 1]]);
