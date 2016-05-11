@@ -4,41 +4,31 @@
 <style media="screen">
 
 </style>
-<div class="container">
-  <h3 class="text-center">ประเภทสวัสดิการ</h3>
-  <hr>
+<div class="container-fluid">
+  <h3 class="text-center">{% block typeTitle %}ประเภทสวัสดิการ{% endblock %}</h3>
   <div class="text-center">
-    <a class="btn btn-info" href="{{ base_url() }}/cripple_type">ประเภทผู้พิการ</a>
-    <a class="btn btn-info" href="{{ base_url() }}/disavantaged_type">ประเภทผู้ด้อยโอกาส</a>
+    <!-- <a class="btn btn-info" href="{{ base_url() }}/cripple_type">ประเภทผู้พิการ</a>
+    <a class="btn btn-info" href="{{ base_url() }}/disavantaged_type">ประเภทผู้ด้อยโอกาส</a> -->
+    <select id="select-type">
+      <option value="{{ base_url() }}/person_type">-- ประเภทสวัสดิการ --</option>
+      <option value="{{ base_url() }}/cripple_type">ประเภทผู้พิการ</option>
+      <option value="{{ base_url() }}/disavantaged_type">ประเภทผู้ด้อยโอกาส</option>
+    </select>
   </div>
-  {% if FALSE %}
-  <!-- <form class="form-inline text-center" action="{{ base_url() }}/report_reg">
-    <div class="form-group">
-      <label>ดาวน์โหลดรายงานการลงทะเบียนใหม่ประจำปี</label>
-      <select name="year" class="form-control">
-        {% for y in reg_year %}
-        <option>{{ y+543 }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <div class="form-group">
-      <button type="submit" class="btn btn-success">ดาวน์โหลด</button>
-    </div>
-  </form>
+  <script>
+  $(function(){
+    var $select = $("#select-type");
+    var base = "{{ base_url() }}/";
+    $select.val(window.location.href);
+    $select.change(function(e){
+      var val = $(this).val();
+      window.location.href = val;
+    });
+  });
+  </script>
   <hr>
-  <form class="form-inline text-center" action="{{ base_url() }}/report_die">
-    <div class="form-group">
-      <label>ดาวน์โหลดรายงานผู้เสียชีวิตประจำปี</label>
-      <select name="year" class="form-control">
-        {% for y in die_year %}
-        <option>{{ y+543 }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <div class="form-group">
-      <button type="submit" class="btn btn-success">ดาวน์โหลด</button>
-    </div>
-  </form> -->
-  {% endif %}
+  <div>
+    {% block bodyType %}{% endblock %}
+  </div>
 </div>
 {% endblock %}

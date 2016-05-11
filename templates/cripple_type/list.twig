@@ -1,9 +1,9 @@
-{% extends "layout.twig" %}
+{% extends "person_type/list.twig" %}
 
-{% block body %}
+{% block typeTitle %}ประเภทผู้พิการ{% endblock %}
+{% block bodyType %}
 <div class="container-fluid">
-  <h3>ประเภทผู้พิการ <a class="btn btn-success btn-add" href="{{ base_url() }}/cripple_type/add">เพิ่มประเภทผู้พิการ</a></h3>
-  <hr>
+  <h3 style="height: 40px;"> <a class="btn btn-success btn-add" href="{{ base_url() }}/cripple_type/add">เพิ่มประเภทผู้พิการ</a></h3>
   <table class="table table-bordered">
     <tr>
       <!-- <th class="text-center">id</th> -->
