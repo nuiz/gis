@@ -23,8 +23,8 @@
         <ul class="nav navbar-nav">
           {% if login.get("user").level in ['admin', 'staff', 'user'] %}<li><a href="{{ base_url() }}/person">จัดการข้อมูลรายบุคคล</a></li>{% endif %}
           {% if login.get("user").level in ['admin', 'staff', 'user'] %}<li><a href="{{ base_url() }}/person_search">ค้นหาข้อมูลรายบุคคล</a></li>{% endif %}
-          {% if login.get("user").level in ['admin', 'staff', 'user'] %}<li><a href="{{ base_url() }}/careergroup">กลุ่มอาชีพ</a></li>{% endif %}
-          {% if login.get("user").level in ['admin', 'staff', 'user'] %}<li><a href="{{ base_url() }}/scholar">ปราชญ์ชาวบ้าน</a></li>{% endif %}
+          {% if login.get("user").level in ['admin', 'staff', 'user'] %}<li><a href="{{ base_url() }}/careergroup">จัดการข้อมูกลุ่มอาชีพ</a></li>{% endif %}
+          {% if login.get("user").level in ['admin', 'staff', 'user'] %}<li><a href="{{ base_url() }}/scholar">จัดการข้อมูปราชญ์ชาวบ้าน</a></li>{% endif %}
           <!-- <li><a href="{{ base_url() }}/learningcenter">ศูนย์การเรียนรู้</a></li> -->
           <!-- {% if login.get("user").level in ['admin', 'staff', 'user'] %}<li><a href="{{ base_url() }}/map">แผนที่</a></li>{% endif %} -->
           {% if login.get("user").level in ['admin', 'staff', 'user'] %}<li><a href="{{ base_url() }}/report">รายงาน</a></li>{% endif %}
