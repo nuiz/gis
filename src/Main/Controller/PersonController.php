@@ -422,9 +422,9 @@ class PersonController extends BaseController
 
     $dateRegex = "/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/";
 
-    $person["die_date"] = preg_match($dateRegex, $input["die_date"])? $this->budDate($input["die_date"]): null;
-    $person["reg_date"] = preg_match($dateRegex, $input["reg_date"])? $this->budDate($input["reg_date"]): null;
-    $person["birth_date"] = preg_match($dateRegex, $input["birth_date"])? $this->budDate($input["birth_date"]): null;
+    $item["die_date"] = preg_match($dateRegex, $item["die_date"])? $this->budDate($item["die_date"]): null;
+    $item["reg_date"] = preg_match($dateRegex, $item["reg_date"])? $this->budDate($item["reg_date"]): null;
+    $item["birth_date"] = preg_match($dateRegex, $item["birth_date"])? $this->budDate($item["birth_date"]): null;
 
     $oldersService = XMLService::getInstance("olders");
     $cripplesService = new CrippleService($db);
