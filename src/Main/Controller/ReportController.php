@@ -155,6 +155,31 @@ class ReportController extends BaseController
     // $objWriter->save('test.xls');
   }
 
+  public function map(Request $req, Response $res)
+  {
+    $container = $this->slim->getContainer();
+    $db = $container->medoo;
+
+    // $persons = $db->select("person", "*");
+    $olders = $db->select("person", "*", ["is_older"=> 1]);
+    $cripples = $db->select("person", ["[>]person_cripple" => ["id" => "person_id"]], "*",
+      ["AND"=> ["person_cripple.cripple_id[!]"=> null], "GROUP"=> "person_cripple.person_id"]);
+      // var_dump($cripples); exit();
+    $disas = $db->select("person", ["[>]person_disavantaged" => ["id" => "person_id"]], "*",
+      ["AND"=> ["person_disavantaged.disavantaged_id[!]"=> null], "GROUP"=> "person_disavantaged.person_id"]);
+    $careergroups = $db->select("careergroup", "*");
+    $scholars = $db->select("scholar", "*");
+
+    return $container->view->render($res, "report/map.twig", [
+      // "persons"=> $persons,
+      "olders"=> $olders,
+      "cripples"=> $cripples,
+      "disas"=> $disas,
+      "careergroups"=> $careergroups,
+      "scholars"=> $scholars
+    ]);
+	}
+
   public function older(Request $req, Response $res)
   {
     $container = $this->slim->getContainer();

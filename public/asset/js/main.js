@@ -3,7 +3,12 @@ $(function(){
 
   $('.datepicker').datepicker({
     "format": "yyyy-mm-dd",
-    "clearBtn": true
+    "clearBtn": true,
+    // "isBuddhist": true
+    "language": "th",
+    // "beforeShowYear": function(input) {
+      // console.log((input.getFullYear() + 543) + "");
+    // }
   });
 
   $(".remove-btn").click(function(e){

@@ -900,6 +900,16 @@
 				tooltip;
 			if (isNaN(year) || isNaN(month))
 				return;
+      if(year > 2100)
+        year -= 543;
+
+      var displayY = function(year){
+        if(year <= 2100) year += 543;
+        // if(year > 2100) year -= 543;
+        return year;
+      };
+
+
 			this.picker.find('.datepicker-days thead .datepicker-switch')
 						.text(DPGlobal.formatDate(new UTCDate(year, month), titleFormat, this.o.language));
 			this.picker.find('tfoot .today')
@@ -976,7 +986,7 @@
 			var monthsTitle = dates[this.o.language].monthsTitle || dates['en'].monthsTitle || 'Months';
 			var months = this.picker.find('.datepicker-months')
 						.find('.datepicker-switch')
-							.text(this.o.maxViewMode < 2 ? monthsTitle : year)
+							.text(this.o.maxViewMode < 2 ? monthsTitle : displayY(year))
 							.end()
 						.find('span').removeClass('active');
 
@@ -1011,7 +1021,7 @@
 			year = parseInt(year/10, 10) * 10;
 			var yearCont = this.picker.find('.datepicker-years')
 								.find('.datepicker-switch')
-									.text(year + '-' + (year + 9))
+									.text(displayY(year) + '-' + (displayY(year) + 9))
 									.end()
 								.find('td');
 			year -= 1;
@@ -1048,8 +1058,8 @@
 						tooltip = yrBefore.tooltip;
 				}
 
-				html += '<span class="' + classes.join(' ') + '"' + (tooltip ? ' title="'+tooltip+'"' : '') + '>' + year + '</span>';
-				year += 1;
+				html += '<span class="' + classes.join(' ') + '"' + (tooltip ? ' title="'+tooltip+'"' : '') + '>' + displayY(year) + '</span>';
+        year += 1;
 			}
 			yearCont.html(html);
 		},
@@ -1824,7 +1834,7 @@
 				M: dates[language].monthsShort[date.getUTCMonth()],
 				MM: dates[language].months[date.getUTCMonth()],
 				yy: date.getUTCFullYear().toString().substring(2),
-				yyyy: date.getUTCFullYear()
+				yyyy: date.getUTCFullYear() < 2100? date.getUTCFullYear() + 543: date.getUTCFullYear()
 			};
 			val.dd = (val.d < 10 ? '0' : '') + val.d;
 			val.mm = (val.m < 10 ? '0' : '') + val.m;

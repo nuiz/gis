@@ -98,6 +98,7 @@ class Route
 		$this->slim->get('/report', ReportController::class. ':report')->add(PermissionMiddleware::create(["admin", "staff", "user"]));
 		// $this->slim->get('/report_die', ReportController::class. ':reportDie')->add(PermissionMiddleware::create(["admin", "staff", "user"]));
 		// $this->slim->get('/report_reg', ReportController::class. ':reportReg')->add(PermissionMiddleware::create(["admin", "staff", "user"]));
+		$this->slim->get('/report/map', ReportController::class. ':map')->add(PermissionMiddleware::create(["admin", "staff", "user"]));
 		$this->slim->get('/report/older', ReportController::class. ':older')->add(PermissionMiddleware::create(["admin", "staff", "user"]));
 		$this->slim->get('/report/cripple', ReportController::class. ':cripple')->add(PermissionMiddleware::create(["admin", "staff", "user"]));
 		$this->slim->get('/report/disavantaged', ReportController::class. ':disavantaged')->add(PermissionMiddleware::create(["admin", "staff", "user"]));

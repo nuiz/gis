@@ -6,43 +6,40 @@
 </style>
 <div class="container">
   <h3 class="text-center">รายงาน</h3>
-  <hr>
-  <div class="text-center">
+  <!-- <hr> -->
+  <!-- <div class="text-center">
     <a class="btn btn-info" href="{{ base_url() }}/map">แผนที่แสดงข้อมูลโดยรวม</a>
     <a class="btn btn-info" href="{{ base_url() }}/report/older">แผนภูมิแสดงตามอายุผู้สูงอายุ</a>
     <a class="btn btn-info" href="{{ base_url() }}/report/cripple">แผนภูมิแสดงประเภทผู้พิการ</a>
     <a class="btn btn-info" href="{{ base_url() }}/report/disavantaged">แผนภูมิแสดงประเภทผู้ด้อยโอกาส</a>
     <a class="btn btn-info" href="{{ base_url() }}/report/register">แผนภูมิแสดงผู้ลงทะเบียนประจำปี</a>
     <a class="btn btn-info" href="{{ base_url() }}/report/die">แผนภูมิแสดงผู้เสียชีวิตประจำปี</a>
+  </div> -->
+  <div class="text-center">
+    <select id="select-report" class="text-center">
+      <option value="{{ base_url() }}/report">-- ประเภทรายงาน --</option>
+      <option value="{{ base_url() }}/report/map">แผนที่แสดงข้อมูลโดยรวม</option>
+      <option value="{{ base_url() }}/report/older">แผนภูมิแสดงตามอายุผู้สูงอายุ</option>
+      <option value="{{ base_url() }}/report/cripple">แผนภูมิแสดงประเภทผู้พิการ</option>
+      <option value="{{ base_url() }}/report/disavantaged">แผนภูมิแสดงประเภทผู้ด้อยโอกาส</option>
+      <option value="{{ base_url() }}/report/register">แผนภูมิแสดงผู้ลงทะเบียนประจำปี</option>
+      <option value="{{ base_url() }}/report/die">แผนภูมิแสดงผู้เสียชีวิตประจำปี</option>
+    </select>
   </div>
-  {% if FALSE %}
-  <!-- <form class="form-inline text-center" action="{{ base_url() }}/report_reg">
-    <div class="form-group">
-      <label>ดาวน์โหลดรายงานการลงทะเบียนใหม่ประจำปี</label>
-      <select name="year" class="form-control">
-        {% for y in reg_year %}
-        <option>{{ y+543 }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <div class="form-group">
-      <button type="submit" class="btn btn-success">ดาวน์โหลด</button>
-    </div>
-  </form>
+  <script>
+  $(function(){
+    var $select = $("#select-report");
+    var base = "{{ base_url() }}/";
+    $select.val(window.location.href);
+    $select.change(function(e){
+      var val = $(this).val();
+      window.location.href = val;
+    });
+  });
+  </script>
   <hr>
-  <form class="form-inline text-center" action="{{ base_url() }}/report_die">
-    <div class="form-group">
-      <label>ดาวน์โหลดรายงานผู้เสียชีวิตประจำปี</label>
-      <select name="year" class="form-control">
-        {% for y in die_year %}
-        <option>{{ y+543 }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <div class="form-group">
-      <button type="submit" class="btn btn-success">ดาวน์โหลด</button>
-    </div>
-  </form> -->
-  {% endif %}
+  <div>
+    {% block bodyReport %}{% endblock %}
+  </div>
 </div>
 {% endblock %}

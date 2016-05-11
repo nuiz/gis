@@ -278,6 +278,11 @@ class PersonController extends BaseController
       return $res->withHeader("Location", $req->getUri()->getBasePath()."/person");
     }
 
+    $dateRegex = "/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/";
+    $item["die_date"] = preg_match($dateRegex, $item["die_date"])? $this->budDate($item["die_date"]): null;
+    $item["reg_date"] = preg_match($dateRegex, $item["reg_date"])? $this->budDate($item["reg_date"]): null;
+    $item["birth_date"] = preg_match($dateRegex, $item["birth_date"])? $this->budDate($item["birth_date"]): null;
+
     $item["cripple_id"] = $db->select("person_cripple", "*", ["person_id"=> $attr["id"]]);
     $item["disa_id"] = $db->select("person_disavantaged", "*", ["person_id"=> $attr["id"]]);
     $item["scho_id"] = $db->select("person_scholar", "*", ["person_id"=> $attr["id"]]);
@@ -339,9 +344,9 @@ class PersonController extends BaseController
     $person["is_older"] = @$input["is_older"]?: 0;
     $person["created_at"] = date("Y-m-d H:i:s");
     $person["updated_at"] = date("Y-m-d H:i:s");
-    $person["die_date"] = preg_match($dateRegex, $input["die_date"])? $input["die_date"]: null;
-    $person["reg_date"] = preg_match($dateRegex, $input["reg_date"])? $input["reg_date"]: null;
-    $person["birth_date"] = preg_match($dateRegex, $input["birth_date"])? $input["birth_date"]: null;
+    $person["die_date"] = preg_match($dateRegex, $input["die_date"])? $this->christDate($input["die_date"]): null;
+    $person["reg_date"] = preg_match($dateRegex, $input["reg_date"])? $this->christDate($input["reg_date"]): null;
+    $person["birth_date"] = preg_match($dateRegex, $input["birth_date"])? $this->christDate($input["birth_date"]): null;
 
     $cripple = is_array(@$person["cripple_id"])? $person["cripple_id"]: [];
     $disavantaged = is_array(@$person["disa_id"])? $person["disa_id"]: [];
@@ -357,6 +362,28 @@ class PersonController extends BaseController
       "scholar"=> $scholar
     ];
     return $params;
+  }
+
+  public function christDate($date)
+  {
+    $d = explode("-", $date);
+    $y = $d[0];
+    if($y >= 2100)
+      $y -= 543;
+    $d[0] = $y;
+
+    return implode("-", $d);
+  }
+
+  public function budDate($date)
+  {
+    $d = explode("-", $date);
+    $y = $d[0];
+    if($y < 2100)
+      $y += 543;
+    $d[0] = $y;
+
+    return implode("-", $d);
   }
 
   public function saveType($personId, $adapterParams)
@@ -394,6 +421,10 @@ class PersonController extends BaseController
     $db = $container->medoo;
 
     $dateRegex = "/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/";
+
+    $person["die_date"] = preg_match($dateRegex, $input["die_date"])? $this->budDate($input["die_date"]): null;
+    $person["reg_date"] = preg_match($dateRegex, $input["reg_date"])? $this->budDate($input["reg_date"]): null;
+    $person["birth_date"] = preg_match($dateRegex, $input["birth_date"])? $this->budDate($input["birth_date"]): null;
 
     $oldersService = XMLService::getInstance("olders");
     $cripplesService = new CrippleService($db);
