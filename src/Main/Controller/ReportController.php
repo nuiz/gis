@@ -206,7 +206,7 @@ class ReportController extends BaseController
       $older["count"] = $db->count("person", ["AND"=> $where]);
     }
 
-    return $container->view->render($res, "report/older.twig", ["olders"=> $olders]);
+    return $container->view->render($res, "report/older.twig", ["olders"=> $olders, "today"=> $this->getToday()]);
   }
 
   public function cripple(Request $req, Response $res)
@@ -223,7 +223,7 @@ class ReportController extends BaseController
       $item["count"] = $db->count("person_cripple", ["AND"=> $where]);
     }
 
-    return $container->view->render($res, "report/cripple.twig", ["items"=> $items]);
+    return $container->view->render($res, "report/cripple.twig", ["items"=> $items, "today"=> $this->getToday()]);
   }
 
   //disavantaged
@@ -242,7 +242,7 @@ class ReportController extends BaseController
       $item["count"] = $db->count("person_disavantaged", ["AND"=> $where]);
     }
 
-    return $container->view->render($res, "report/disavantaged.twig", ["items"=> $items]);
+    return $container->view->render($res, "report/disavantaged.twig", ["items"=> $items, "today"=> $this->getToday()]);
   }
 
   public function register(Request $req, Response $res)
@@ -269,7 +269,7 @@ class ReportController extends BaseController
       $items[] = $item;
     }
 
-    return $container->view->render($res, "report/register.twig", ["items"=> $items]);
+    return $container->view->render($res, "report/register.twig", ["items"=> $items, "today"=> $this->getToday()]);
   }
 
   public function dies(Request $req, Response $res)
@@ -296,6 +296,32 @@ class ReportController extends BaseController
       $items[] = $item;
     }
 
-    return $container->view->render($res, "report/die.twig", ["items"=> $items]);
+    return $container->view->render($res, "report/die.twig", ["items"=> $items, "today"=> $this->getToday()]);
+  }
+
+  // get thai now
+  private $month = [
+    "มกราคม",
+    "กุมภาพันธ์",
+    "มีนาคม",
+    "เมษายน",
+    "พฤษภาคม",
+    "มิถุนายน",
+    "กรกฎาคม",
+    "สิงหาคม",
+    "กันยายน",
+    "ตุลาคม",
+    "พฤศจิกายน",
+    "ธันวาคม"
+  ];
+  public function getToday()
+  {
+    $nowY = (int)date("Y");
+    $nowY += 543;
+    $nowM = (int)date("m");
+    $nowM = $this->month[$nowM-1];
+
+    $nowStr = "วันที่ ".((int)date("d"))." ".$nowM."พ.ศ.".$nowY;
+    return $nowStr;
   }
 }

@@ -76,7 +76,7 @@ class AccountController extends BaseController
     if($db->count("account", ["username"=> @$postBody["username"]]) > 0) {
       return $container->view->render($res, "account/form.twig", [
         "form"=> $postBody,
-        "error_message"=> "ชื่อผู้ใช้งานซ้ำ"
+        "error_message"=> "ชื่อผู้ใช้งานซ้ำกับผู้ใช้งานอื่น"
       ]);
     }
 
@@ -115,6 +115,12 @@ class AccountController extends BaseController
     $editParams = $this->adapterParams($postBody);
 
     // var_dump($editParams); exit();
+    if($db->count("account", ["AND"=> ["username"=> @$postBody["username"], "id[!]"=> $attr["id"]]]) > 0) {
+      return $container->view->render($res, "account/form.twig", [
+        "form"=> $postBody,
+        "error_message"=> "ชื่อผู้ใช้งานซ้ำกับผู้ใช้งานอื่น"
+      ]);
+    }
 
     if($db->update("account", $editParams, ["id"=> $attr["id"]]) !== false) {
       return $res->withHeader("Location", $req->getUri()->getBasePath()."/account");

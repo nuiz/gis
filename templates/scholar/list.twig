@@ -2,7 +2,7 @@
 
 {% block body %}
 <div class="container-fluid">
-  <h3>จัดการข้อมูลปราชญ์ชาวบ้าน <a class="btn btn-success btn-add" href="{{ base_url() }}/scholar/add">เพิ่มกลุ่มอาชีพ</a></h3>
+  <h3><img src="{{ base_url() }}/asset/images/marker/lc-marker.png"> จัดการข้อมูลปราชญ์ชาวบ้าน <a class="btn btn-success btn-add" href="{{ base_url() }}/scholar/add">เพิ่มกลุ่มอาชีพ</a></h3>
   <hr>
 
   <table class="table table-bordered">
@@ -10,7 +10,7 @@
       <!-- <th class="text-center">id</th> -->
       <th class="text-center">ชื่อ</th>
       <th class="text-center">ชื่อผู้ติดต่อ</th>
-      <th class="text-center">นามสกุล</th>
+      <!-- <th class="text-center">นามสกุล</th> -->
       <th class="text-center">เบอร์โทรศัพท์ผู้ติดต่อ</th>
       {% if login.get("user").level in ["admin", "staff"] %}
       <th></th>
@@ -20,8 +20,8 @@
     <tr>
       <!-- <td class="text-center">{{ item.id }}</td> -->
       <td><a href="{{ base_url() }}/scholar/{{ item.id }}">{{ item.name }}</a></td>
-      <td class="text-center">{{ item.contact_firstname }}</td>
-      <td class="text-center">{{ item.contact_lastname }}</td>
+      <td class="">{{ item.contact_firstname }} {{ item.contact_lastname }}</td>
+      <!-- <td class="text-center"></td> -->
       <td class="text-center">{{ item.contact_phone }}</td>
       {% if login.get("user").level in ["admin", "staff"] %}
       <td>

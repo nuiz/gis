@@ -23,6 +23,24 @@ form {
   /*margin: 0 auto;*/
   max-width: 400px;
 }
+
+/*
+.map-container {
+  position: relative;
+}
+*/
+.today {
+  /*position: absolute;
+  top: 0;
+  right: 0;*/
+  color: #666666;
+}
+
+@media print {
+  #select-report {
+    display: none;
+  }
+}
 /*
 h3 {
   text-align: center;

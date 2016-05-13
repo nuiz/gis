@@ -6,7 +6,7 @@
   {% if error_message %}
   <div class="alert alert-danger" role="alert">{{ error_message }}</div>
   {% endif %}
-  <form method="post">
+  <form method="post" id="form-user">
     <div class="form-group">
       <label>ชื่อ</label>
       <input type="text" class="form-control" name="name" value="{{ form.name }}" required>
@@ -17,7 +17,12 @@
     </div>
     <div class="form-group">
       <label>รหัสผ่าน</label>
-      <input type="text" class="form-control" name="password" value="{{ form.password }}" required>
+      <input id="password" type="password" class="form-control" name="password" value="{{ form.password }}" required>
+    </div>
+    <div class="form-group">
+      <label>ยืนยันรหัสผ่าน</label>
+      <input id="password-confirm" type="password" class="form-control" value="{{ form.password }}" required>
+      <span id="helpBlock" class="help-block" style="display: none;">รหัสผ่านไม่ตรงกัน</span>
     </div>
     <div class="form-group">
       <label>ระดับผู้ใช้งาน</label>
@@ -37,6 +42,38 @@
 <link rel="stylesheet" href="{{ base_url() }}/asset/select2/css/select2.min.css">
 <script type="text/javascript">
 $(function(){
+  var $password = $("#password");
+  var $passwordConfirm = $("#password-confirm");
+  var $helpBlock = $("#helpBlock");
+  var validPassword = false;
+
+  function changePasswordInput() {
+    var val1 = $password.val();
+    var val2 = $passwordConfirm.val();
+    validPassword = val1 == val2;
+    if(validPassword) {
+      $password.closest(".form-group").removeClass("has-error");
+      $passwordConfirm.closest(".form-group").removeClass("has-error");
+      $helpBlock.hide();
+    }
+    else {
+      $password.closest(".form-group").addClass("has-error");
+      $passwordConfirm.closest(".form-group").addClass("has-error");
+    }
+  }
+
+  $password.keyup(changePasswordInput);
+  $passwordConfirm.keyup(changePasswordInput);
+  changePasswordInput();
+
+  $("#form-user").on("submit", function(e){
+    if(!validPassword) {
+      $helpBlock.show();
+      $passwordConfirm.focus();
+      e.preventDefault();
+      return false;
+    }
+  });
 });
 </script>
 {% endblock %}
