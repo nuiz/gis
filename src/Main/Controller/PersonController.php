@@ -422,6 +422,10 @@ class PersonController extends BaseController
 
     $dateRegex = "/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/";
 
+    $item["age"] = preg_match($dateRegex, $item["birth_date"])?
+      \DateTime::createFromFormat('Y-m-d', $item["birth_date"])->diff(new \DateTime('now'))->y:
+      null;
+
     $item["die_date"] = preg_match($dateRegex, $item["die_date"])? $this->budDate($item["die_date"]): null;
     $item["reg_date"] = preg_match($dateRegex, $item["reg_date"])? $this->budDate($item["reg_date"]): null;
     $item["birth_date"] = preg_match($dateRegex, $item["birth_date"])? $this->budDate($item["birth_date"]): null;
@@ -430,10 +434,6 @@ class PersonController extends BaseController
     $cripplesService = new CrippleService($db);
     $disavantagedsService = new DisavantagedService($db);
     $scholarsService = new ScholarService($db);
-
-    $item["age"] = preg_match($dateRegex, $item["birth_date"])?
-      \DateTime::createFromFormat('Y-m-d', $item["birth_date"])->diff(new \DateTime('now'))->y:
-      null;
 
     $item["older"] = $oldersService->getBy(["min[<=]"=> $item["age"], "max[>=]"=> $item["age"]]);
     $item["cripple"] = $db->select("person_cripple", ["[>]cripple_type"=> ["cripple_id"=> "id"]], "*", ["person_id"=> $item["id"]]);
@@ -457,5 +457,4 @@ class PersonController extends BaseController
     $item["total_allowance"] += count($item["disavantaged"]) > 0? 500: 0;
     // $item["total_allowance"] += count($item["scholar"]);
   }
-
 }
